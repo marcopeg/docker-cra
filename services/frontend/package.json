@@ -1,0 +1,41 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-helmet": "^5.2.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "1.1.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "start:ssr": "NODE_ENV=production SSR=true node server",
+    "start:ssr:dev": "NODE_ENV=development SSR=true nodemon -e js,jsx server",
+    "start:docker": "yarn && react-app-rewired start",
+    "start:ssr:docker": "yarn && yarn build && NODE_ENV=production SSR=true node server",
+    "start:ssr:docker:dev": "yarn && yarn build && NODE_ENV=production SSR=true nodemon -e js,jsx server",
+    "build": "react-app-rewired build",
+    "serve": "./node_modules/.bin/serve -s build -p 8080",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^3.1.1",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-import": "^2.10.0",
+    "ignore-styles": "^5.0.1",
+    "node-env-file": "^0.1.8",
+    "nodemon": "^1.17.3",
+    "react-app-rewire-eslint": "^0.2.3",
+    "react-app-rewired": "^1.5.0",
+    "serve": "^6.5.3",
+    "winston": "^2.4.1"
+  }
+}
