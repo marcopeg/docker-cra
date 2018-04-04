@@ -16,17 +16,17 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "start:ssr": "NODE_ENV=production SSR=true node server",
-    "start:ssr:dev": "NODE_ENV=development SSR=true nodemon -e js,jsx server",
-    "start:docker": "yarn && react-app-rewired start",
-    "start:ssr:docker": "yarn && yarn build && NODE_ENV=production SSR=true node server",
-    "start:ssr:docker:dev": "yarn && yarn build && NODE_ENV=production SSR=true nodemon -e js,jsx server",
+    "start:dev:app": "react-app-rewired start",
+    "start:dev:api": "NODE_ENV=development SSR=true nodemon -e js,jsx server",
+    "start:dev": "yarn && yarn build && ./node_modules/.bin/npm-run-all --parallel start:dev:*",
+    "start:prod:api": "NODE_ENV=production SSR=true node server",
+    "start:prod": "yarn && yarn build && yarn start:prod:api",
     "build": "react-app-rewired build",
     "serve": "./node_modules/.bin/serve -s build -p 8080",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject"
   },
-  "proxy": "http://172.16.135.198:8080",
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
     "eslint-config-react": "^1.1.7",
@@ -37,6 +37,7 @@
     "react-app-rewire-eslint": "^0.2.3",
     "react-app-rewired": "^1.5.0",
     "serve": "^6.5.3",
-    "winston": "^2.4.1"
+    "winston": "^2.4.1",
+    "yarn-run-all": "^3.1.1"
   }
 }

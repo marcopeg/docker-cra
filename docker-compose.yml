@@ -18,25 +18,40 @@ services:
     #     working_dir: /usr/src/app
     #     entrypoint: ["yarn", "start:dev"]
 
-    frontend:
-        image: node:9.7
-        networks:
-            - default
-        ports:
-            - ${BACKEND_PORT:-3000}:3000
-        volumes:
-            - ./services/frontend:/usr/src/app
-        environment:
-            NODE_ENV: development
-            LOG_LEVEL: ${LOG_LEVEL-info}
-        working_dir: /usr/src/app
-        entrypoint: [ "yarn", "start:docker" ]
+    # frontend:
+    #     image: node:9.7
+    #     networks:
+    #         - default
+    #     ports:
+    #         - ${BACKEND_PORT:-3000}:3000
+    #     volumes:
+    #         - ./services/frontend:/usr/src/app
+    #     environment:
+    #         NODE_ENV: development
+    #         LOG_LEVEL: ${LOG_LEVEL-info}
+    #     working_dir: /usr/src/app
+    #     entrypoint: [ "yarn", "start:docker" ]
 
-    ssr:
+    # ssr:
+    #     image: node:9.7
+    #     networks:
+    #         - default
+    #     ports:
+    #         - ${SSR_PORT:-8080}:8080
+    #     volumes:
+    #         - ./services/frontend:/usr/src/app
+    #     environment:
+    #         NODE_ENV: development
+    #         LOG_LEVEL: ${LOG_LEVEL-info}
+    #     working_dir: /usr/src/app
+    #     entrypoint: [ "yarn", "start:ssr:docker:dev" ]
+
+    dev:
         image: node:9.7
         networks:
             - default
         ports:
+            - ${APP_PORT:-3000}:3000
             - ${SSR_PORT:-8080}:8080
         volumes:
             - ./services/frontend:/usr/src/app
@@ -44,7 +59,7 @@ services:
             NODE_ENV: development
             LOG_LEVEL: ${LOG_LEVEL-info}
         working_dir: /usr/src/app
-        entrypoint: [ "yarn", "start:ssr:docker:dev" ]
+        entrypoint: [ "yarn", "start:dev" ]
 
 networks:
     default:
