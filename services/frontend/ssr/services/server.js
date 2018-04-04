@@ -6,6 +6,7 @@ const { serveBuild } = require('../middlewares/serve-build')
 const { serveApp } = require('../middlewares/serve-app')
 const { router: apiV1 } = require('../routes/v1')
 
+const PORT = process.env.PORT || 8080
 const app = express()
 
 const init = () => {
@@ -16,7 +17,6 @@ const init = () => {
 }
 
 const start = () => {
-    const PORT = process.env.PORT || 8080
     app.listen(PORT, () => winston.info(`[ssr] server running on ${PORT}`))
 }
 

@@ -1,52 +1,7 @@
 version: '3.4'
 services:
 
-    # backend:
-    #     image: node:9.7
-    #     networks:
-    #         - default
-    #     ports:
-    #         - ${BACKEND_PORT:-8080}:3000
-    #     volumes:
-    #         - ./services/backend:/usr/src/app
-    #     environment:
-    #         NODE_ENV: development
-    #         LOG_LEVEL: ${LOG_LEVEL-verbose}
-    #         JWT_SECRET: ${JWT_SECRET:-12345}
-    #         COOKIE_SECRET: ${COOKIE_SECRET:-12345}
-    #         SESSION_DURATION: ${SESSION_DURATION:-3600}
-    #     working_dir: /usr/src/app
-    #     entrypoint: ["yarn", "start:dev"]
-
-    # frontend:
-    #     image: node:9.7
-    #     networks:
-    #         - default
-    #     ports:
-    #         - ${BACKEND_PORT:-3000}:3000
-    #     volumes:
-    #         - ./services/frontend:/usr/src/app
-    #     environment:
-    #         NODE_ENV: development
-    #         LOG_LEVEL: ${LOG_LEVEL-info}
-    #     working_dir: /usr/src/app
-    #     entrypoint: [ "yarn", "start:docker" ]
-
-    # ssr:
-    #     image: node:9.7
-    #     networks:
-    #         - default
-    #     ports:
-    #         - ${SSR_PORT:-8080}:8080
-    #     volumes:
-    #         - ./services/frontend:/usr/src/app
-    #     environment:
-    #         NODE_ENV: development
-    #         LOG_LEVEL: ${LOG_LEVEL-info}
-    #     working_dir: /usr/src/app
-    #     entrypoint: [ "yarn", "start:ssr:docker:dev" ]
-
-    dev:
+    frontend:
         image: node:9.7
         networks:
             - default
