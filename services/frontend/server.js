@@ -5,7 +5,7 @@ require('babel-register')({
     ignore: /\/(build|node_modules)\//,
     presets: [ 'env', 'react-app' ],
     plugins: [
-        [ 'module-resolver', { root: [ './src', './api' ] } ],
+        [ 'module-resolver', { root: ['./src'] } ],
     ],
 })
 
@@ -14,8 +14,8 @@ const winston = require('winston')
 winston.level = process.env.LOG_LEVEL || 'verbose'
 
 // Include Services
-const env = require('./api/services/env')
-const server = require('./api/services/server')
+const env = require('./ssr/services/env')
+const server = require('./ssr/services/server')
 
 const boot = async () => {
     try {

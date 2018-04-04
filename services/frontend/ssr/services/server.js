@@ -2,9 +2,9 @@ const express = require('express')
 const compression = require('compression')
 const winston = require('winston')
 
-const { serveBuild } = require('middlewares/serve-build')
-const { serveApp } = require('middlewares/serve-app')
-const { router: apiV1 } = require('routes/v1')
+const { serveBuild } = require('../middlewares/serve-build')
+const { serveApp } = require('../middlewares/serve-app')
+const { router: apiV1 } = require('../routes/v1')
 
 const app = express()
 
