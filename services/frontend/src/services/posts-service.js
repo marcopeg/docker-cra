@@ -5,7 +5,8 @@ import { fetchUserById } from 'services/users-service'
 
 export const fetchPostsList = () => async (dispatch, getState) => {
     const { ssr } = getState()
-    return ssr.await(getJSON('https://jsonplaceholder.typicode.com/posts'))
+    console.log(ssr.apiUrl('/v1/posts'))
+    return ssr.await(getJSON(ssr.apiUrl('/v1/posts')))
 }
 
 export const fetchPostById = postId => async (dispatch, getState) => {

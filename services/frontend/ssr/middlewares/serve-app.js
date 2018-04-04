@@ -47,7 +47,12 @@ const serveApp = () => async (req, res, next) => {
     try {
         const filePath = path.resolve(__dirname, '../../build/index.html')
         const htmlTemplate = await readFile(filePath)
-        const initialState = {}
+        const PORT = process.env.PORT || 8080
+        const initialState = {
+            ssr: {
+                apiUrl: `http://localhost:${PORT}/api`,
+            },
+        }
         const prerender = await staticRender(req.url, initialState, 3000)
         const helmet = Helmet.renderStatic()
 

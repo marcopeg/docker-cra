@@ -12,7 +12,7 @@ const init = () => {
     app.use(compression())
     app.use('/api/v1', apiV1)
     app.use(serveBuild())
-    app.use(serveApp())
+    app.get('*', serveApp())
 }
 
 const start = () => {

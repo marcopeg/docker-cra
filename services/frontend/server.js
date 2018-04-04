@@ -9,6 +9,10 @@ require('babel-register')({
     ],
 })
 
+// Isomorphic Fetch
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
+
 // Setup Logging
 const winston = require('winston')
 winston.level = process.env.LOG_LEVEL || 'verbose'

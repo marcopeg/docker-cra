@@ -3,9 +3,13 @@
         import/prefer-default-export: off
 */
 
-const createContext = () => {
+const createContext = (settings) => {
     const awaitStack = []
     const callbacks = {}
+
+    const apiUrl = settings.apiUrl
+        ? settings.apiUrl
+        : '/api'
 
     let checkTimer = null
 
@@ -64,6 +68,7 @@ const createContext = () => {
 
             return p
         },
+        apiUrl: url => `${apiUrl}${url}`,
     }
 
 
