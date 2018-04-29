@@ -1,7 +1,13 @@
 
 export const initialState = {
     list: null,
-    active: null,
+    details: {
+        // [userId]: { ...user-details }
+    },
+    posts: {
+        // [userId]: [ ...user-posts ]
+    },
+    current: null,
 }
 
 /**
@@ -9,28 +15,29 @@ export const initialState = {
  */
 
 export const SET_LIST = 'setList@users'
-export const RESET_LIST = 'resetList@users'
-export const SET_USER = 'setUser@users'
-export const RESET_USER = 'resetUser@users'
+export const SET_DETAILS = 'setDetails@users'
+export const SET_POSTS = 'setPosts@users'
+export const SET_CURRENT = 'setCurrent@users'
 
-export const setList = value => ({
+export const setList = items => ({
     type: SET_LIST,
-    payload: value,
+    payload: items,
 })
 
-export const resetList = value => ({
-    type: RESET_LIST,
+export const setDetails = (id, data) => ({
+    type: SET_DETAILS,
+    payload: { id, data },
 })
 
-export const setUser = value => ({
-    type: SET_USER,
-    payload: value,
+export const setPosts = (id, items) => ({
+    type: SET_POSTS,
+    payload: { id, items },
 })
 
-export const resetUser = value => ({
-    type: RESET_USER,
+export const setCurrent = id => ({
+    type: SET_CURRENT,
+    payload: id,
 })
-
 
 /**
  * Handlers
@@ -39,19 +46,25 @@ export const resetUser = value => ({
 export const actionHandlers = {
     [SET_LIST]: (state, action) => ({
         ...state,
-        list: [...action.payload],
+        list: action.payload,
     }),
-    [RESET_LIST]: (state, action) => ({
+    [SET_DETAILS]: (state, action) => ({
         ...state,
-        list: null,
+        details: {
+            ...state.details,
+            [action.payload.id]: action.payload.data,
+        },
     }),
-    [SET_USER]: (state, action) => ({
+    [SET_POSTS]: (state, action) => ({
         ...state,
-        active: { ...action.payload },
+        posts: {
+            ...state.posts,
+            [action.payload.id]: action.payload.items,
+        },
     }),
-    [RESET_USER]: (state, action) => ({
+    [SET_CURRENT]: (state, action) => ({
         ...state,
-        active: null,
+        current: action.payload,
     }),
 }
 

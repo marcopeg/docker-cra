@@ -9,8 +9,12 @@
 
 const init = () => {}
 
-const get = (key) => {
+const get = (key, defaultValue) => {
     if (process.env[key] === undefined) {
+        if (defaultValue) {
+            return defaultValue
+        }
+
         throw new Error(`Env "${key}" not defined`)
     }
     return process.env[key]

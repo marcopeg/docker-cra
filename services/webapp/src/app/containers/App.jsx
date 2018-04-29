@@ -5,6 +5,7 @@ import radium from 'radium'
 
 import { Menu } from 'features/menu'
 import { Dashboard } from 'features/dashboard'
+import { Users } from 'features/users'
 
 import getStyles from './App.style'
 const styles = getStyles()
@@ -21,6 +22,7 @@ const App = () => (
         </Helmet>
         <Menu />
         <Route path="/" exact component={Dashboard} />
+        <Route path="/users" component={Users} />
     </div>
 )
 

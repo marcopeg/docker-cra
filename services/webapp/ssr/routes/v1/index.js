@@ -1,56 +1,36 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// const config = require('../../lib/config')
-// const { requestData } = require('../../middlewares/request-data')
-// const { validateJwt } = require('../../middlewares/validate-jwt')
-// const { validateGrants } = require('../../middlewares/validate-grants')
 
-// const { createAuthRouter } = require('./auth')
-// const { createTokensRouter } = require('./tokens')
-// const { createElsRouter } = require('./els')
-// const { createCerberusRouter } = require('./cerberus')
-// const { createUsersRouter } = require('./users')
-// const { createUtilsRouter } = require('./utils')
+/**
+ * Import sub routers
+ */
 
-const router = express.Router()
+const { createUsersRouter } = require('./users')
+const { createPostsRouter } = require('./posts')
 
-router.use(bodyParser.json())
+/**
+ * Router creator
+ * it can receive configuration as parameter
+ */
 
-router.get('/', (req, res) => res.send('+ok api v1'))
+const createApiRouter = () => {
+    const router = express.Router()
 
-// router.use('/auth', [
-//     requestData(),
-// ], createAuthRouter())
+    router.use(bodyParser.json())
 
-// router.use('/tokens', [
-//     requestData(),
-//     validateJwt(),
-//     validateGrants('tokens:*'),
-// ], createTokensRouter())
+    router.use('/users', [
+        createUsersRouter(),
+    ])
 
-// router.use('/els', [
-//     requestData(),
-//     validateJwt(),
-//     validateGrants('els:?'), // @TODO: "els:?"" to accept any possible sub-grant
-// ], createElsRouter())
+    router.use('/posts', [
+        createPostsRouter(),
+    ])
 
-// router.use('/users', [
-//     requestData(),
-//     validateJwt(),
-//     validateGrants('users:*'),
-// ], createUsersRouter())
+    router.get('/', (req, res) => res.send('+ok api v1'))
 
-// router.use('/cerberus', [
-//     requestData(),
-//     validateJwt(),
-//     validateGrants('cerberus:*'),
-// ], createCerberusRouter())
-
-// // Development stuff
-// if (config.isDev()) {
-//     router.use('/utils', createUtilsRouter())
-// }
+    return router
+}
 
 module.exports = {
-    router,
+    createApiRouter,
 }

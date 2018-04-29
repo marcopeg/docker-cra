@@ -8,5 +8,7 @@ export const services = [
 ]
 
 export const listeners = [
-    require('./listeners/users-listener'),
+    // require('./listeners/users-listener'),
 ]
+
+export { default as Users } from './containers/Users'
