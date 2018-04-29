@@ -5,10 +5,14 @@ import radium from 'radium'
 import getStyles from './Title.style'
 const styles = getStyles()
 
-const Title = ({ children, style, ...props }) => (
+const Title = ({ children, standalone, style, ...props }) => (
     <div
         {...props}
-        style={[ styles.wrapper, style ]}
+        style={[
+            styles.wrapper,
+            standalone ? styles.wrapper.standalone : null,
+            style,
+        ]}
     >
         {children}
     </div>
@@ -17,10 +21,12 @@ const Title = ({ children, style, ...props }) => (
 Title.propTypes = {
     children: PropTypes.any.isRequired, // eslint-disable-line
     style: PropTypes.object,
+    standalone: PropTypes.bool,
 }
 
 Title.defaultProps = {
     style: {},
+    standalone: false,
 }
 
 const StyledTitle = radium(Title)

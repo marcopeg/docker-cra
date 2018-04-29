@@ -8,18 +8,20 @@ import Page from 'layouts/Page'
 import PageSection from 'layouts/Page/Section'
 
 import { loadPosts, loadPost } from '../services/posts-service'
+import AuthorDetails from './AuthorDetails'
+import RelatedPosts from './RelatedPosts'
 
 /**
  * State Management
  */
 
-const getPostTitle = (list, postId) => {
+const getPostTitle = (postsList, postId) => {
     const defautValue = `post n.${postId}`
-    if (!list) {
+    if (!postsList) {
         return defautValue
     }
 
-    const post = list.find(i => String(i.id) === postId)
+    const post = postsList.find(i => String(i.id) === postId)
     if (post) {
         return post.title
     }
@@ -27,8 +29,11 @@ const getPostTitle = (list, postId) => {
     return defautValue
 }
 
-const getPostContent = (posts, postId) => {
-    const post = posts[postId]
+const getPostContent = (postsMap, postId) => {
+    if (!postsMap) {
+        return 'loading...'
+    }
+    const post = postsMap[postId]
     if (!post) {
         return 'loading...'
     }
@@ -38,11 +43,26 @@ const getPostContent = (posts, postId) => {
     return post.body
 }
 
+const getAuthorId = (postsMap, postId) => {
+    if (!postsMap) {
+        return null
+    }
+    const post = postsMap[postId]
+    if (!post) {
+        return null
+    }
+    if (!post.id) {
+        return null
+    }
+    return String(post.userId)
+}
+
 const state2props = ({ posts }, { match }) => ({
     isReady: !!posts.details[match.params.postId],
     postId: match.params.postId,
     title: getPostTitle(posts.list, match.params.postId),
     content: getPostContent(posts.details, match.params.postId),
+    authorId: getAuthorId(posts.details, match.params.postId),
 })
 
 const dispatch2props = {
@@ -59,10 +79,18 @@ const Loading = () => (
     <PageSection>loading...</PageSection>
 )
 
-const Content = ({ content }) => (
-    <PageSection>
-        {content}
-    </PageSection>
+const Content = ({ content, authorId }) => (
+    <div>
+        <PageSection>
+            {content}
+        </PageSection>
+        <PageSection>
+            <AuthorDetails authorId={authorId} />
+        </PageSection>
+        <PageSection title="Related Posts">
+            <RelatedPosts authorId={authorId} />
+        </PageSection>
+    </div>
 )
 
 class PostDetails extends React.PureComponent {
@@ -93,6 +121,7 @@ PostDetails.propTypes = {
 }
 
 Content.propTypes = {
+    authorId: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
 }
 

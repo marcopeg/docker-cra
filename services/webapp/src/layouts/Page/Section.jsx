@@ -9,7 +9,7 @@ const styles = getStyles()
 
 const Section = ({ children, style, title, ...props }) => (
     <div style={style}>
-        {title ? <Title>{title}</Title> : null}
+        {title ? <Title standalone>{title}</Title> : null}
         <div
             {...props}
             style={styles.wrapper}

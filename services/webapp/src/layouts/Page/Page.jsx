@@ -12,7 +12,7 @@ const Page = ({ children, style, title, ...props }) => (
         {...props}
         style={[ styles.wrapper, style ]}
     >
-        {title ? <Title>{title}</Title> : null}
+        {title ? <Title standalone>{title}</Title> : null}
         {children}
     </div>
 )
