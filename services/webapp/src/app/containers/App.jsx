@@ -22,7 +22,7 @@ const App = () => (
         </Helmet>
         <Menu />
         <Route path="/" exact component={Dashboard} />
-        <Route path="/users" component={Users} />
+        <Route path="/users/:userId?" component={Users} />
     </div>
 )
 

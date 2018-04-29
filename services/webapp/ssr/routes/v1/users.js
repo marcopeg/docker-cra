@@ -10,12 +10,16 @@ const getUsersList = () => async (req, res, next) => {
     try {
         const data = await fetch('https://jsonplaceholder.typicode.com/users')
         const json = await data.json()
-        res.send(json.map(user => ({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            username: user.username,
-        })))
+        const items = json
+            .map(user => ({
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                username: user.username,
+            }))
+            // used to test different responses in different SSR rendering
+            // .filter((item) => (Math.random() < 0.5))
+        res.send(items)
     } catch (err) {
         next(err)
     }

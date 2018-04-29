@@ -4,15 +4,26 @@ import { LOCATION_CHANGE } from 'features/location'
 
 import {
     loadUsers,
+    loadUser,
+    loadUserPosts,
 } from '../services/users-service'
 
 const applyRoutes = createHistoryRouter([
     {
+        path: '/users/:userId/details',
+        action: params => loadUser(params.userId),
+    },
+    {
+        path: '/users/:userId/posts',
+        action: params => loadUserPosts(params.userId),
+    },
+    {
         path: '/users/:userId?',
-        exact: true,
         action: loadUsers,
     },
-])
+], {
+    allowMultipleRoutes: true,
+})
 
 export default [
     {

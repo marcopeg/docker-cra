@@ -1,16 +1,26 @@
 import { getJSON } from 'lib/request'
-// import { fetchPostsByUserId } from 'services/posts-service'
 
 import {
     setList,
-    // setDetails,
-    // setPosts,
-    // setCurrent,
+    setDetails,
+    setPosts,
 } from '../reducers/users-reducer'
 
 export const fetchUsers = () => (dispatch, getState) => {
     const { ssr } = getState()
     const endpoint = ssr.apiUrl('/v1/users')
+    return ssr.await(getJSON(endpoint))
+}
+
+export const fetchUser = userId => (dispatch, getState) => {
+    const { ssr } = getState()
+    const endpoint = ssr.apiUrl(`/v1/users/${userId}`)
+    return ssr.await(getJSON(endpoint))
+}
+
+export const fetchUserPosts = userId => (dispatch, getState) => {
+    const { ssr } = getState()
+    const endpoint = ssr.apiUrl(`/v1/users/${userId}/posts`)
     return ssr.await(getJSON(endpoint))
 }
 
@@ -31,35 +41,36 @@ export const loadUsers = () => async (dispatch, getState) => {
     }
 }
 
-// export const fetchUserById = userId => async (dispatch, getState) => {
-//     const { ssr, users } = getState()
+export const loadUser = userId => async (dispatch, getState) => {
+    const { users } = getState()
 
-//     // cache result
-//     if (users.details[userId]) {
-//         return users.details[userId]
-//     }
+    // return cached result
+    if (users.details[userId]) {
+        return users.details[userId]
+    }
 
-//     const data = await ssr.await(getJSON(`https://jsonplaceholder.typicode.com/users/${userId}`))
-//     dispatch(setDetails(userId, data))
+    // run a real user details fetch action
+    try {
+        const data = await dispatch(fetchUser(userId))
+        dispatch(setDetails(userId, data))
+    } catch (err) {
+        console.error(err)
+    }
+}
 
-//     return data
-// }
+export const loadUserPosts = userId => async (dispatch, getState) => {
+    const { users } = getState()
 
-// export const loadCurrentUser = userId => async (dispatch) => {
-//     dispatch(setCurrent(userId))
-//     dispatch(fetchUserById(userId))
-// }
+    // return cached result
+    if (users.posts[userId]) {
+        return users.posts[userId]
+    }
 
-// export const loadUserPosts = userId => async (dispatch, getState) => {
-//     const { users } = getState()
-
-//     // cache result
-//     if (users.posts[userId]) {
-//         return users.posts[userId]
-//     }
-//     // const posts = await dispatch(fetchPostsByUserId(userId))
-//     const posts = []
-//     dispatch(setPosts(userId, posts))
-
-//     return posts
-// }
+    // run a real user details fetch action
+    try {
+        const items = await dispatch(fetchUserPosts(userId))
+        dispatch(setPosts(userId, items))
+    } catch (err) {
+        console.error(err)
+    }
+}

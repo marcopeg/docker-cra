@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import radium from 'radium'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 import Page from 'layouts/Page'
 import PageSection from 'layouts/Page/Section'
@@ -10,6 +10,8 @@ import List from 'components/List'
 import Link from 'components/RadiumLink'
 
 import UserDetails from './UserDetails'
+import UserPosts from './UserPosts'
+import UserMenu from './UserMenu'
 
 import getStyles from './Users.style'
 const styles = getStyles()
@@ -58,16 +60,36 @@ const renderList = (items) => {
     )
 }
 
-const Users = ({ items }) => (
+const Users = ({ items, match }) => (
     <Page title="Users">
         <PageSection>
             {renderList(items)}
         </PageSection>
-        <Route path={'/users/:userId'} component={UserDetails} />
+        <Route
+            exact
+            path={'/users/:userId/'}
+            component={() => (
+                <Redirect to={`${match.url}/details`} />
+            )}
+        />
+        <Route
+            exact
+            path={'/users/:userId/:action(details|posts)'}
+            component={UserMenu}
+        />
+        <Route
+            path={'/users/:userId/details'}
+            component={UserDetails}
+        />
+        <Route
+            path={'/users/:userId/posts'}
+            component={UserPosts}
+        />
     </Page>
 )
 
 Users.propTypes = {
+    match: PropTypes.any.isRequired, // eslint-disable-line
     items: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
