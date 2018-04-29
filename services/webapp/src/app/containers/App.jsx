@@ -6,6 +6,7 @@ import radium from 'radium'
 import { Menu } from 'features/menu'
 import { Dashboard } from 'features/dashboard'
 import { Users } from 'features/users'
+import { Posts } from 'features/posts'
 
 import getStyles from './App.style'
 const styles = getStyles()
@@ -23,6 +24,7 @@ const App = () => (
         <Menu />
         <Route path="/" exact component={Dashboard} />
         <Route path="/users/:userId?" component={Users} />
+        <Route path="/posts/:postId?" component={Posts} />
     </div>
 )
 
