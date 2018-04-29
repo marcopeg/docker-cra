@@ -3,11 +3,13 @@ import { fonts } from 'app/styles'
 
 const getStyles = () => ({
     wrapper: {
-        ...fonts.title,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 15,
+        // layout
+        marginLeft: 50,
+        marginRight: 50,
         marginBottom: 10,
+
+        // appearance
+        ...fonts.title,
     },
 })
 

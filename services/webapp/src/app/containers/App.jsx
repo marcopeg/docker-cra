@@ -1,38 +1,33 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-// import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import radium from 'radium'
 
 import { Menu } from 'features/menu'
+import { Dashboard } from 'features/dashboard'
 
 import getStyles from './App.style'
 const styles = getStyles()
 
-const state2props = ({ app }) => ({
-    title: app.name,
-})
+/**
+ * Component
+ */
 
-const dispatch2props = {}
-
-const App = ({ title }) => (
-    <div style={styles.root}>
+const App = () => (
+    <div style={styles.wrapper}>
         <Helmet>
             <html lang="en" />
             <title>docker - cra</title>
         </Helmet>
         <Menu />
-        <h1>{title}</h1>
+        <Route path="/" exact component={Dashboard} />
     </div>
 )
 
-App.propTypes = {
-    title: PropTypes.string.isRequired,
-}
+
+/**
+ *  Decorators & Exports
+ */
 
 const StyledApp = radium(App)
-const ConnectedApp = connect(state2props, dispatch2props)(StyledApp)
-
-export default withRouter(ConnectedApp)
+export default StyledApp

@@ -1,12 +1,8 @@
 
-export const reducers = {
-    // feature: require('./feature-reducer').default,
-}
+export const reducers = {}
 
-export const services = [
-    // require('./feature-service'),
-]
+export const services = []
 
-export const listeners = [
-    // require('./feature-listener'),
-]
+export const listeners = []
+
+export { default as Dashboard } from './containers/Dashboard'
