@@ -1,59 +1,87 @@
-/* eslint-disable */
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import radium from 'radium'
 import { connect } from 'react-redux'
-// import { openModal } from 'features/modals'
+import { Route } from 'react-router-dom'
 
 import Page from 'layouts/Page'
 import PageSection from 'layouts/Page/Section'
 import List from 'components/List'
-import Button from 'components/Button'
+import Link from 'components/RadiumLink'
 
-// import { loadUser } from '../services/users-service'
+import UserDetails from './UserDetails'
+
+import getStyles from './Users.style'
+const styles = getStyles()
+
+
+/**
+ * State Management
+ */
 
 const state2props = ({ users, modals }) => ({
-    // list: users.list || [],
+    items: users.list,
 })
 
-const dispatch2props = {
-    // editUser: uname => (dispatch) => {
-    //     dispatch(loadUser(uname))
-    //     dispatch(openModal('editusr', { uname }))
-    // },
-    // createUser: uname => openModal('newusr'),
+const dispatch2props = {}
+
+
+/**
+ * Component
+ */
+
+const makeListItems = items => items.map(item => ({
+    ...item,
+    key: `user-${item.id}`,
+}))
+
+const renderItem = item => (
+    <Link to={`/users/${item.id}`} style={styles.link}>
+        {item.name}
+    </Link>
+)
+
+const renderList = (items) => {
+    if (!items) {
+        return <div>loadin</div>
+    }
+
+    if (!items.length) {
+        return <div>no users found</div>
+    }
+
+    return (
+        <List
+            items={makeListItems(items)}
+            renderItem={renderItem}
+        />
+    )
 }
 
-// const makeListItems = items => items.map(item => ({
-//     key: item,
-//     uname: item,
-// }))
-
-// const renderUser = user => user.uname
-
-const Users = ({ list, editUser, createUser }) => (
+const Users = ({ items }) => (
     <Page title="Users">
         <PageSection>
-            {/* <List
-                items={makeListItems(list)}
-                renderItem={renderUser}
-                onDisclose={item => editUser(item.uname)}
-            /> */}
+            {renderList(items)}
         </PageSection>
+        <Route path={'/users/:userId'} component={UserDetails} />
     </Page>
 )
 
 Users.propTypes = {
-    // list: PropTypes.arrayOf(PropTypes.string),
-    // editUser: PropTypes.func.isRequired,
-    // createUser: PropTypes.func.isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+    })),
 }
 
 Users.defaultProps = {
-    // list: null,
+    items: [],
 }
 
-const StyledUsers = radium(Users)
 
+/**
+ *  Decorators & Exports
+ */
+
+const StyledUsers = radium(Users)
 export default connect(state2props, dispatch2props)(StyledUsers)
