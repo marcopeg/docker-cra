@@ -1,15 +1,15 @@
-version: '3.4'
+version: '2.1'
 services:
 
-    frontend:
-        image: node:9.7
+    webapp:
+        image: node:9.9
         networks:
             - default
         ports:
             - ${APP_PORT:-3000}:3000
             - ${SSR_PORT:-8080}:8080
         volumes:
-            - ./services/frontend:/usr/src/app
+            - ./services/webapp:/usr/src/app
         environment:
             NODE_ENV: development
             LOG_LEVEL: ${LOG_LEVEL-info}
