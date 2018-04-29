@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import radium from 'radium'
 import { connect } from 'react-redux'
 
+import { Helmet } from 'react-helmet'
 import Page from 'layouts/Page'
 import PageSection from 'layouts/Page/Section'
 
@@ -99,9 +100,16 @@ class PostDetails extends React.PureComponent {
         this.props.loadPost(this.props.postId)
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (this.props.postId !== nextProps.postId) {
+            this.props.loadPost(nextProps.postId)
+        }
+    }
+
     render () {
         return (
             <Page title={this.props.title}>
+                <Helmet><title>{this.props.title}</title></Helmet>
                 {(
                     this.props.isReady
                         ? <Content {...this.props} />

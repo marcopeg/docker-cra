@@ -2,11 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import radium from 'radium'
 import { connect } from 'react-redux'
-// import { Route } from 'react-router-dom'
 
-// import Page from 'layouts/Page'
+import { Helmet } from 'react-helmet'
 import PageSection from 'layouts/Page/Section'
-// import List from 'components/List'
 import Link from 'components/RadiumLink'
 
 import getStyles from './UserMenu.style'
@@ -38,6 +36,7 @@ const dispatch2props = {}
 
 const UserMenu = ({ id, name }) => (
     <PageSection title={name}>
+        <Helmet><title>{name}</title></Helmet>
         <Link to={`/users/${id}/details`} style={styles.link}>details</Link>
         {' | '}
         <Link to={`/users/${id}/posts`} style={styles.link}>posts</Link>
