@@ -1,14 +1,13 @@
 
 export const reducers = {
-    // posts: require('./reducers/users-reducer').default,
+    posts: require('./reducers/posts-reducer').default,
 }
 
 export const services = [
-    // require('./services/posts-service'),
+    require('./services/posts-service'),
 ]
 
-export const listeners = [
-    // require('./listeners/posts-listener'),
-]
+export const listeners = []
 
 export { default as Posts } from './containers/Posts'
+export { default as PostDetails } from './containers/PostDetails'
