@@ -21,22 +21,5 @@ services:
         volumes:
             - ./services/webapp/build:/usr/share/nginx/html
 
-
-
-    # proxy:
-    #     image: nginx:1.13
-    #     depends_on:
-    #         - webapp
-    #     networks:
-    #         - production
-    #     ports:
-    #         - ${PROXY_PORT:-80}:80
-    #     volumes:
-    #         - ./services/nginx-proxy/nginx.static.conf:/etc/nginx/nginx.conf
-    #         - ./services/nginx-proxy/h5bp:/etc/nginx/h5bp
-    #         - ./services/nginx-proxy/h5bp-full:/etc/nginx/h5bp-full
-    #         - ./services/nginx-proxy/.htpasswd:/etc/nginx/.htpasswd
-    #         - ./services/webapp/build:/usr/share/nginx/html
-
 networks:
     production:
