@@ -12,6 +12,7 @@
 # misc
 !.env
 .env.local
+.env.override
 .env.development.local
 .env.test.local
 .env.production.local
