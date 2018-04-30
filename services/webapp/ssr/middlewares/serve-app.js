@@ -26,7 +26,7 @@ const prepHTML = (template, {
     let data = template
     data = data.replace('<html lang="en">', `<html ${html}>`)
     data = data.replace('</head>', `${head}</head>`)
-    data = data.replace('</head>', `<script>window.REDUX_INITIAL_STATE = ${JSON.stringify(state)};</script></head>`)
+    data = data.replace('<div id="root"></div>', `<div id="root"></div><script>window.REDUX_INITIAL_STATE = ${JSON.stringify(state)};</script>`)
     data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
 
     // Use bundles from development website (experimental)
