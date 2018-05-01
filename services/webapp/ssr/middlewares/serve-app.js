@@ -1,21 +1,30 @@
 const path = require('path')
 const fs = require('fs')
+const winston = require('winston')
 const { Helmet } = require('react-helmet')
 const { staticRender } = require('../../src/index.ssr')
 
 const readFile = (filePath, encoding = 'utf8') => new Promise((resolve, reject) => {
+    if (readFile.cache[filePath]) {
+        return resolve(readFile.cache[filePath])
+    }
+
     try {
         fs.readFile(filePath, encoding, (err, data) => {
             if (err) {
                 reject(err)
                 return
             }
+            readFile.cache[filePath] = data
             resolve(data)
         })
     } catch (err) {
         reject(err)
     }
 })
+
+// setup file cache memoization
+readFile.cache = {}
 
 const prepHTML = (template, {
     html,
@@ -36,7 +45,7 @@ const prepHTML = (template, {
     }
 
     // remove bundle js (dev, experimental)
-    console.log("disable", process.env.SSR_DISABLE_JS)
+    winston.debug('disable javascript in SSR?', process.env.SSR_DISABLE_JS)
     if (process.env.SSR_DISABLE_JS === 'yes') {
         data = data.replace(/<script type="text\/javascript" src="\/static\/js\/main.([^\s]*).js"><\/script>/g, '')
     }
