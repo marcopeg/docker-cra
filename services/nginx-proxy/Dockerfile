@@ -16,6 +16,10 @@ COPY nginx.tmpl.conf /app/nginx.conf.tmpl
 COPY h5bp /etc/nginx/h5bp
 COPY h5bp-full /etc/nginx/h5bp-full
 
+## Create empty files for access control and accessory functionalities
+RUN touch /etc/nginx/rewrites.conf
+RUN touch /etc/nginx/.htpasswd
+
 ## Proxy configuration
 ENV NGINX_HOST "_"
 ENV NGINX_PORT "80"
@@ -31,6 +35,19 @@ ENV NGINX_X_CONTENT_TYPE_OPTIONS_HEADER 'add_header X-Content-Type-Options "nosn
 ENV NGINX_X_FRAME_OPTIONS_HEADER 'add_header X-Frame-Options "SAMEORIGIN" always;'
 ENV NGINX_REFERRER_POLICY_HEADER 'add_header Referrer-Policy "no-referrer" always;'
 
+## Static Files Proxy
+ENV NGINX_STATIC_FILES_ENABLED "true"
+ENV NGINX_STATIC_FILES_ROOT "/usr/src/app/build/"
+ENV NGINX_STATIC_FILES_LOCATION "^~ /static/"
+
+## Basic Auth
+ENV NGINX_AUTH_BASIC_ENABLED "false"
+ENV NGINX_AUTH_BASIC_HTPASSWD "/etc/nginx/.htpasswd"
+
+## Rewrite Rules
+ENV NGINX_REWRITES_ENABLED = "false"
+ENV NGINX_REWRITES_CONF = "/etc/nginx/rewrites.conf"
+
 ## Misc
 # Add the following CIDR IP Ranges to the geo $ip_access_granted variable
 # If it's unset the service will allow all traffic (0.0.0.0/0)
@@ -39,7 +56,7 @@ ENV NGINX_AUTH_COOKIE_NAME "webapp-access-cookie"
 ENV NGINX_AUTH_COOKIE_VALUE "RSog06uO8JhhA4EqVg9WxETffSGbu13xVLl1OQT9LTE0Wg1wso"
 ENV NGINX_REAL_IP_CIDR "10.0.0.0/16"
 # NGINX_PROXY_PASS_TRAIL_SLASH controls the proxy_pass directive in server {}.
-# If set to "true" a trailing slash will be added. true: http://siteupstream/; false: http://siteupstream;
+# If set to "true" a trailing slash will be added. true: http://webapp/; false: http://webapp;
 ENV NGINX_PROXY_PASS_TRAIL_SLASH "false"
 # NGINX_PROXY_REDIRECT controls the proxy_redirect directive in server {}.
 # If unset to or to off the following will be added: proxy_redirect   off;
@@ -49,10 +66,5 @@ ENV NGINX_PROXY_REDIRECT "off"
 ENV NGINX_PROXY_HEADER_X_FORWARDED_PROTO '$scheme'
 # Action to perform if access denied
 ENV NGINX_NO_ACCESS_ACTION 'return 404;'
-
-## Static Files Proxy
-ENV NGINX_STATIC_FILES_ENABLED "false"
-ENV NGINX_STATIC_FILES_ROOT "/static"
-ENV NGINX_STATIC_FILES_LOCATION "/static"
 
 CMD ["/usr/bin/dockerize", "-template", "/app/nginx.conf.tmpl:/etc/nginx/nginx.conf", "nginx"]

@@ -18,8 +18,8 @@ services:
         environment:
             NGINX_UPSTREAM_SERVER: webapp
             NGINX_UPSTREAM_PORT: 8080
-        volumes:
-            - ./services/webapp/build:/usr/share/nginx/html
+        volumes_from:
+            - webapp
 
 networks:
     production:
