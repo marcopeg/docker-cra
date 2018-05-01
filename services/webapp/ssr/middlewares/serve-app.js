@@ -53,8 +53,9 @@ const prepHTML = (template, {
     return data
 }
 
-const serveApp = () => async (req, res, next) => {
+const serveApp = (settings = {}) => async (req, res, next) => {
     try {
+        winston.verbose(`[ssr] ${req.url}`)
         const filePath = path.resolve(__dirname, '../../build/index.html')
         const htmlTemplate = await readFile(filePath)
         const PORT = process.env.PORT || 8080
@@ -63,7 +64,10 @@ const serveApp = () => async (req, res, next) => {
                 apiUrl: `http://localhost:${PORT}/api`,
             },
         }
-        const prerender = await staticRender(req.url, initialState, 3000)
+        const prerender = await staticRender(req.url, initialState, {
+            timeout: settings.timeout,
+            userAgent: req.headers['user-agent'],
+        })
         const helmet = Helmet.renderStatic()
 
         // handle simple redirect

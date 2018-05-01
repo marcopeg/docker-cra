@@ -10,10 +10,10 @@ import { Router } from 'react-router-dom'
 
 import App from './App'
 
-const Root = ({ store, history }) => (
+const Root = ({ store, history, userAgent }) => (
     <Provider store={store}>
         <Router history={history}>
-            <App />
+            <App radiumConfig={{ userAgent }} />
         </Router>
     </Provider>
 )

@@ -17,9 +17,9 @@ const init = () => {
     app.use('/api/v1', createApiRouter())
 
     // serve client app
-    app.get('/', serveApp())
+    app.get('/', serveApp({ timeout: 5000 }))
     app.use(serveBuild())
-    app.get('*', serveApp())
+    app.get('*', serveApp({ timeout: 5000 }))
 
     // handle errors
     app.use(errorHandler)

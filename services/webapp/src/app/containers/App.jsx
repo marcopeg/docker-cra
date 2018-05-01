@@ -15,7 +15,7 @@ const styles = getStyles()
  * Component
  */
 
-const App = () => (
+const App = (props) => (
     <div style={styles.wrapper}>
         <Helmet>
             <html lang="en" />

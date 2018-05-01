@@ -1,6 +1,7 @@
 // const Sequelize = require('sequelize')
 // const elasticsearch = require('elasticsearch')
 
+// Setup winston log level
 const winston = require('winston')
 winston.level = process.env.LOG_LEVEL || 'verbose'
 

@@ -9,10 +9,10 @@ import { StaticRouter } from 'react-router-dom'
 
 import App from './App'
 
-const RootStatic = ({ store, url, context }) => (
+const RootStatic = ({ store, url, context, userAgent }) => (
     <Provider store={store}>
         <StaticRouter location={url} context={context}>
-            <App />
+            <App radiumConfig={{ userAgent }} />
         </StaticRouter>
     </Provider>
 )

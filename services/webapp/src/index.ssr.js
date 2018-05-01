@@ -15,16 +15,19 @@ const renderInitialState = ({
     store,
     history,
     timeout,
+    userAgent,
 }) => new Promise((resolve) => {
     const { ssr } = store.getState()
 
     const timer = setTimeout(() => {
-        console.error('TIMEOUT', url) // eslint-disable-line
+        console.error('SSR TIMEOUT', url) // eslint-disable-line
         resolve()
     }, timeout)
 
+    // rendering loop, used to resolve nested componentWillMount
+    // data loading side effects.
     function tick () {
-        renderToString(<Root store={store} history={history} />)
+        renderToString(<Root store={store} history={history} userAgent={userAgent} />)
         if (!ssr.checkStack()) {
             clearTimeout(timer)
             resolve()
@@ -34,24 +37,26 @@ const renderInitialState = ({
     }
 
     history.push(url)
-    renderToString(<Root store={store} history={history} />)
+    renderToString(<Root store={store} history={history} userAgent={userAgent} />)
     ssr.once('complete', tick)
 })
 
-export const staticRender = async (url, initialState = {}, timeout) => {
+export const staticRender = async (url, initialState = {}, settings = {}) => {
     const history = createHistory()
     const { store, events } = createStore(history, initialState)
     const context = {}
+    const userAgent = settings.userAgent || 'unknown user agent'
 
     await renderInitialState({
         url,
         store,
         history,
         events,
-        timeout,
+        timeout: settings.timeout || 3000,
+        userAgent,
     })
 
-    const html = renderToString(<RootStatic store={store} url={url} context={context} />)
+    const html = renderToString(<RootStatic store={store} url={url} context={context} userAgent={userAgent} />)
 
     return {
         html,
