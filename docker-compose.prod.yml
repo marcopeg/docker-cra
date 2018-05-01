@@ -18,6 +18,7 @@ services:
         environment:
             NGINX_UPSTREAM_SERVER: webapp
             NGINX_UPSTREAM_PORT: 8080
+            NGINX_STATIC_FILES_ROOT: "/usr/src/app/build/"
         volumes_from:
             - webapp
 

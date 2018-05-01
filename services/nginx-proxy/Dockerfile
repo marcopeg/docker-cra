@@ -37,7 +37,7 @@ ENV NGINX_REFERRER_POLICY_HEADER 'add_header Referrer-Policy "no-referrer" alway
 
 ## Static Files Proxy
 ENV NGINX_STATIC_FILES_ENABLED "true"
-ENV NGINX_STATIC_FILES_ROOT "/usr/src/app/build/"
+ENV NGINX_STATIC_FILES_ROOT "/usr/share/nginx/html"
 ENV NGINX_STATIC_FILES_LOCATION "^~ /static/"
 
 ## Basic Auth
