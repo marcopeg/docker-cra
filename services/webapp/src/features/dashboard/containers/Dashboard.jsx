@@ -14,10 +14,30 @@ import Text from 'layouts/Page/Text'
  */
 
 const Dashboard = () => (
-    <Page title="Dashboard">
+    <Page title="Welcome to Universal React on Docker">
         <Section>
             <Text>
-                Here come the dashboard...
+                <p>
+                    This project aim to put together great open source projects with the goal
+                    to provide an easy starting point to create and distribute universal PWA based on React/Redux.
+                </p>
+                <ul>
+                    <li>a Docker wrapper makes it immediate to start working on the solution</li>
+                    <li>thaks to Docker, it's easy to deploy highly optimized containers with a built in NGiNX proxy</li>
+                    <li>SSR - server side rendering is built-in with simple Express middlewares</li>
+                    <li>
+                        {'the React app is built over '}
+                        <a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener noreferrer">create-react-app</a>
+                        {' and '}
+                        <a href="https://github.com/timarney/react-app-rewired" target="_blank" rel="noopener noreferrer">react-app-rewired</a>
+                    </li>
+                    <li>
+                        react-redux, redux-thunks, react-router, route listeners, radium are already set up and ready to be used
+                    </li>
+                </ul>
+                <p>
+                    <a href="https://github.com/marcopeg/docker-cra" target="_blank" rel="noopener noreferrer">Read the full README.md, and contribute on GitHub :-)</a>
+                </p>
             </Text>
         </Section>
     </Page>

@@ -1,6 +1,6 @@
 
 export const initialState = {
-    name: 'api.mysocial.io',
+    name: 'docker-cra',
     isReady: false,
     settings: {},
 }
