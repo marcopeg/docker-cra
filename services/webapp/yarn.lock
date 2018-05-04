@@ -5923,9 +5923,9 @@ react-app-rewire-eslint@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/react-app-rewire-eslint/-/react-app-rewire-eslint-0.2.3.tgz#88e93d74569c33fe22185d46f6a2b521c4dd7fb6"
 
-react-app-rewire-inline-sourcep@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-app-rewire-inline-sourcep/-/react-app-rewire-inline-sourcep-1.0.0.tgz#4a2e971707f00e766e949e1606c5edd75e0fdd24"
+react-app-rewire-inline-source@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-app-rewire-inline-source/-/react-app-rewire-inline-source-2.0.0.tgz#2399c54908f9a2ce3f6b4d62784fca1574e80e19"
   dependencies:
     html-webpack-inline-source-plugin "0.0.10"
 
