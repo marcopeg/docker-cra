@@ -3,6 +3,12 @@ const fs = require('fs')
 const winston = require('winston')
 const { Helmet } = require('react-helmet')
 const { staticRender } = require('../../src/index.ssr')
+const { get: getConfig } = require('../lib/config')
+
+// Get environment variables
+const NODE_ENV = getConfig('NODE_ENV')
+const SSR_DISABLE_JS = getConfig('SSR_DISABLE_JS')
+const SSR_USE_DYNAMIC_JS = getConfig('SSR_USE_DYNAMIC_JS')
 
 const readFile = (filePath, encoding = 'utf8') => new Promise((resolve, reject) => {
     if (readFile.cache[filePath]) {
@@ -37,21 +43,21 @@ const prepHTML = (template, {
     data = data.replace('</head>', `${head}</head>`)
 
     // avoid to send out the redux state if client js is disabled
-    if (process.env.SSR_DISABLE_JS !== 'yes') {
+    if (SSR_DISABLE_JS !== 'yes') {
+        // eslint-disable-next-line
         data = data.replace('<div id="root"></div>', `<div id="root"></div><script>window.REDUX_INITIAL_STATE = ${JSON.stringify(state)};</script>`)
     }
 
     data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
 
     // Use bundles from development website (experimental)
-    if (process.env.NODE_ENV === 'development' && process.env.SSR_USE_DYNAMIC_JS === 'yes') {
+    if (NODE_ENV === 'development' && SSR_USE_DYNAMIC_JS === 'yes') {
         data = data.replace(/<link href="\/static\/css\/main.([^\s]*).css" rel="stylesheet">/g, '')
         data = data.replace(/\/static\/js\/main.([^\s]*).js/g, '//localhost:3000/static/js/bundle.js')
     }
 
     // remove bundle js (dev, experimental)
-    winston.debug('disable javascript in SSR?', process.env.SSR_DISABLE_JS)
-    if (process.env.SSR_DISABLE_JS === 'yes') {
+    if (SSR_DISABLE_JS === 'yes') {
         data = data.replace(/<script type="text\/javascript" src="\/static\/js\/main.([^\s]*).js"><\/script>/g, '')
     }
 

@@ -11,6 +11,8 @@ services:
         environment:
             NODE_ENV: development
             LOG_LEVEL: ${LOG_LEVEL-info}
+            SSR_DISABLE_JS: ${SSR_DISABLE_JS-no}
+            SSR_USE_DYNAMIC_JS: ${SSR_USE_DYNAMIC_JS-no}
         volumes:
             - ./services/webapp:/usr/src/app
         working_dir: /usr/src/app
