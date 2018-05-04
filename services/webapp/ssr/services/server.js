@@ -2,9 +2,10 @@ const winston = require('winston')
 const express = require('express')
 const compression = require('compression')
 
-const { serveBuild } = require('../middlewares/serve-build')
+// const { serveBuild } = require('../middlewares/serve-build')
 const { errorHandler } = require('../middlewares/error-handler')
 const { createApiRouter } = require('../routes/v1')
+const { createSsrRouter } = require('../routes/ssr')
 
 const app = express()
 
@@ -19,19 +20,8 @@ const init = (settings = {}) => {
     // serve data API
     app.use('/api/v1', createApiRouter())
 
-    // serve client app
-    let serveApp = null
-    if (settings.ssrEnabled === 'yes') {
-        const { serveAppSSR } = require('../middlewares/serve-app-ssr')
-        serveApp = serveAppSSR
-    } else {
-        const { serveAppStatic } = require('../middlewares/serve-app-static')
-        serveApp = serveAppStatic
-    }
-
-    app.get('/', serveApp(settings))
-    app.use(serveBuild(settings))
-    app.get('*', serveApp(settings))
+    // ssr - serve client app
+    app.use(createSsrRouter(settings))
 
     // handle errors
     app.use(errorHandler)

@@ -32,7 +32,7 @@ const prepHTML = (template, {
     body,
     state,
     ssrDisableJs,
-    ssrUseDynamicJs,
+    ssrUseWebpackJs,
     nodeEnv,
 }) => {
     let data = template
@@ -49,7 +49,7 @@ const prepHTML = (template, {
     data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
 
     // Use bundles from development website (experimental)
-    if (nodeEnv === 'development' && ssrUseDynamicJs === 'yes') {
+    if (nodeEnv === 'development' && ssrUseWebpackJs === 'yes') {
         data = data.replace(/<link href="\/static\/css\/main.([^\s]*).css" rel="stylesheet">/g, '')
         data = data.replace(/\/static\/js\/main.([^\s]*).js/g, '//localhost:3000/static/js/bundle.js')
     }
@@ -78,6 +78,7 @@ const serveAppSSR = (settings = {}) => async (req, res, next) => {
         const htmlTemplate = await readFile(filePath)
         const initialState = {
             ssr: {
+                serverUrl: `http://localhost:${settings.ssrPort}`,
                 apiUrl: `http://localhost:${settings.ssrPort}/api`,
             },
         }
@@ -95,6 +96,7 @@ const serveAppSSR = (settings = {}) => async (req, res, next) => {
         }
 
         res.send(prepHTML(htmlTemplate, {
+            ...settings,
             html: helmet.htmlAttributes.toString(),
             head: [
                 helmet.title.toString(),
@@ -103,9 +105,6 @@ const serveAppSSR = (settings = {}) => async (req, res, next) => {
             ].join(''),
             body: prerender.html,
             state: prerender.initialState,
-            nodeEnv: settings.nodeEnv,
-            ssrDisableJs: settings.ssrDisableJs,
-            ssrUseDynamicJs: settings.ssrUseDynamicJs,
         }))
     } catch (err) {
         res.status(500).send(err.message)
