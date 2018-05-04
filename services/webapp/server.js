@@ -34,12 +34,20 @@ const boot = async () => {
         // init services
         winston.verbose('[boot] init services...')
         await env.init()
-        await server.init()
+        await server.init({
+            ssrEnabled: getConfig('SSR_ENABLED'),
+            ssrTimeout: getConfig('SSR_TIMEOUT'),
+            ssrRoot: getConfig('SSR_ROOT'),
+            ssrPort: getConfig('SSR_PORT'),
+            ssrDisableJs: getConfig('SSR_DISABLE_JS'),
+            ssrUseDynamicJs: getConfig('SSR_USE_DYNAMIC_JS'),
+            nodeEnv: getConfig('NODE_ENV'),
+        })
 
         // start services
         winston.verbose('[boot] start services...')
         await server.start({
-            port: getConfig('SSR_PORT', 8080),
+            port: getConfig('SSR_PORT'),
         })
 
         winston.verbose('[boot] complete!')

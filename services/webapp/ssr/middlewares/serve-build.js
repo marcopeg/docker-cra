@@ -1,7 +1,11 @@
-const path = require('path')
+
 const express = require('express')
 
-const serveBuild = () => express.static(path.resolve(__dirname, '..', '..', 'build'))
+/**
+ * Settings
+ * - ssrRoot (string) - client app build folder
+ */
+const serveBuild = (settings) => express.static(settings.ssrRoot)
 
 module.exports = {
     serveBuild,

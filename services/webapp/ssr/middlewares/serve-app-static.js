@@ -1,9 +1,13 @@
 const path = require('path')
 
-const serveApp = () => async (req, res, next) => {
-    res.sendFile(path.join(__dirname, '../../build/index.html'))
+/**
+ * Settings
+ * - ssrRoot (string) - client app build folder
+ */
+const serveAppStatic = (settings) => async (req, res, next) => {
+    res.sendFile(path.join(settings.ssrRoot, 'index.html'))
 }
 
 module.exports = {
-    serveApp,
+    serveAppStatic,
 }

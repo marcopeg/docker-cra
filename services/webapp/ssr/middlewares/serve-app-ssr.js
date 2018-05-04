@@ -3,12 +3,6 @@ const fs = require('fs')
 const winston = require('winston')
 const { Helmet } = require('react-helmet')
 const { staticRender } = require('../../src/index.ssr')
-const { get: getConfig } = require('../lib/config')
-
-// Get environment variables
-const NODE_ENV = getConfig('NODE_ENV')
-const SSR_DISABLE_JS = getConfig('SSR_DISABLE_JS')
-const SSR_USE_DYNAMIC_JS = getConfig('SSR_USE_DYNAMIC_JS')
 
 const readFile = (filePath, encoding = 'utf8') => new Promise((resolve, reject) => {
     if (readFile.cache[filePath]) {
@@ -37,13 +31,17 @@ const prepHTML = (template, {
     head,
     body,
     state,
+    ssrDisableJs,
+    ssrUseDynamicJs,
+    nodeEnv,
 }) => {
     let data = template
     data = data.replace('<html lang="en">', `<html ${html}>`)
     data = data.replace('</head>', `${head}</head>`)
 
+    console.log('DISABLE JE', ssrDisableJs)
     // avoid to send out the redux state if client js is disabled
-    if (SSR_DISABLE_JS !== 'yes') {
+    if (ssrDisableJs !== 'yes') {
         // eslint-disable-next-line
         data = data.replace('<div id="root"></div>', `<div id="root"></div><script>window.REDUX_INITIAL_STATE = ${JSON.stringify(state)};</script>`)
     }
@@ -51,32 +49,40 @@ const prepHTML = (template, {
     data = data.replace('<div id="root"></div>', `<div id="root">${body}</div>`)
 
     // Use bundles from development website (experimental)
-    if (NODE_ENV === 'development' && SSR_USE_DYNAMIC_JS === 'yes') {
+    if (nodeEnv === 'development' && ssrUseDynamicJs === 'yes') {
         data = data.replace(/<link href="\/static\/css\/main.([^\s]*).css" rel="stylesheet">/g, '')
         data = data.replace(/\/static\/js\/main.([^\s]*).js/g, '//localhost:3000/static/js/bundle.js')
     }
 
     // remove bundle js (dev, experimental)
-    if (SSR_DISABLE_JS === 'yes') {
+    if (ssrDisableJs === 'yes') {
         data = data.replace(/<script type="text\/javascript" src="\/static\/js\/main.([^\s]*).js"><\/script>/g, '')
     }
 
     return data
 }
 
-const serveApp = (settings = {}) => async (req, res, next) => {
+/**
+ * Settings:
+ * - ssrRoot (string) - client app build folder
+ * - ssrPort: (string) - ssr server port for default api calls
+ * - ssrTimeout: (int) - rendering timeout in milliseconds
+ * - ssrDisableJs: (string)[yes|no]
+ * - ssrUseDynamicJs: (string)[yes|no]
+ * - nodeEnv: (string)[development|production]
+ */
+const serveAppSSR = (settings = {}) => async (req, res, next) => {
     try {
         winston.verbose(`[ssr] ${req.url}`)
-        const filePath = path.resolve(__dirname, '../../build/index.html')
+        const filePath = path.resolve(path.join(settings.ssrRoot, 'index.html'))
         const htmlTemplate = await readFile(filePath)
-        const PORT = process.env.PORT || 8080
         const initialState = {
             ssr: {
-                apiUrl: `http://localhost:${PORT}/api`,
+                apiUrl: `http://localhost:${settings.ssrPort}/api`,
             },
         }
         const prerender = await staticRender(req.url, initialState, {
-            timeout: settings.timeout,
+            timeout: settings.ssrTimeout,
             userAgent: req.headers['user-agent'],
         })
         const helmet = Helmet.renderStatic()
@@ -97,6 +103,9 @@ const serveApp = (settings = {}) => async (req, res, next) => {
             ].join(''),
             body: prerender.html,
             state: prerender.initialState,
+            nodeEnv: settings.nodeEnv,
+            ssrDisableJs: settings.ssrDisableJs,
+            ssrUseDynamicJs: settings.ssrUseDynamicJs,
         }))
     } catch (err) {
         res.status(500).send(err.message)
@@ -104,5 +113,5 @@ const serveApp = (settings = {}) => async (req, res, next) => {
 }
 
 module.exports = {
-    serveApp,
+    serveAppSSR,
 }

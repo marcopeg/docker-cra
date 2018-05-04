@@ -8,6 +8,10 @@ services:
         environment:
             NODE_ENV: production
             LOG_LEVEL: ${LOG_LEVEL-verbose}
+            SSR_PORT: ${SSR_PORT:-8080}
+            SSR_ENABLED: ${SSR_ENABLED-yes}
+            SSR_ROOT: ${SSR_ROOT:-/usr/src/app/build}
+            SSR_TIMEOUT: ${SSR_TIMEOUT:-5000}
             SSR_DISABLE_JS: ${SSR_DISABLE_JS-no}
             SSR_USE_DYNAMIC_JS: ${SSR_USE_DYNAMIC_JS-no}
         restart: always
