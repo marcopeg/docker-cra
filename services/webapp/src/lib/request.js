@@ -1,5 +1,5 @@
 /* global fetch */
-import { pause } from './utils'
+import pause from '@marcopeg/utils/lib/pause'
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')

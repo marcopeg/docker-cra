@@ -23,7 +23,7 @@ require('es6-promise').polyfill()
 require('isomorphic-fetch')
 // <--> Isomorphic Fetch
 
-const { get: getConfig } = require('./ssr/lib/config')
+const { get: getConfig } = require('@marcopeg/utils/lib/config')
 
 // Include Services
 const env = require('./ssr/services/env')
