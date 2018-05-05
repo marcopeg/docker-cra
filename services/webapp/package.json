@@ -29,6 +29,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "1.1.4",
     "redux": "^3.7.2",
+    "redux-events-middleware": "^1.0.0",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {

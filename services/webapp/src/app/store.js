@@ -12,8 +12,8 @@ import {
 import thunk from 'redux-thunk'
 
 import { routerMiddleware } from 'react-router-redux'
+import { ReduxEvents } from 'redux-events-middleware'
 
-import { ReduxEvents } from 'lib/redux-events-middleware'
 import createSSRContext from 'lib/ssr'
 
 import { configServices } from './services'
