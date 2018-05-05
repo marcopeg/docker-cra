@@ -17,8 +17,7 @@ const createHistoryRouter = (routes, config = {}) => location => (dispatch) => {
 
     try {
         const allMatchingRoutes = routes
-            .map(route => ({
-                ...route,
+            .map(route => Object.assign({}, route, {
                 match: matchPath(pathname, {
                     path: route.path,
                     exact: route.exact,
@@ -27,7 +26,7 @@ const createHistoryRouter = (routes, config = {}) => location => (dispatch) => {
             .filter(route => route.match)
 
         const applicableRoutes = config.allowMultipleRoutes
-            ? [...allMatchingRoutes]
+            ? allMatchingRoutes.map(i => i)
             : [allMatchingRoutes.shift()]
 
         applicableRoutes.forEach(({ action, match }) => {
@@ -35,10 +34,9 @@ const createHistoryRouter = (routes, config = {}) => location => (dispatch) => {
                 dispatch(action(match.params, match))
                 dispatch({
                     type: '@@route::fired',
-                    payload: {
-                        ...location,
+                    payload: Object.assign({}, location, {
                         params: match.params,
-                    },
+                    }),
                 })
             }
         })
