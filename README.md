@@ -28,5 +28,35 @@ client app with _redux-dev-tools_ enabled, source maps and all the cool stuff.
 docker-compose -f docker-compose.prod.yml up
 ```
 
+## Run without Docker
+
+Move into the `webapp` service:
+
+```
+cd services/webapp
+```
+
+Create the basic environment variables needed by the server:
+
+```
+# .env.local
+# (this file is gitignored)
+SSR_ENABLED=yes
+SSR_TIMEOUT=5000
+SSR_ROOT=/Users/marcopeg/dev/marcopeg/docker-cra/services/webapp/build
+SSR_PORT=8080
+SSR_DISABLE_JS=no
+```
+
+Start the projec:
+
+```
+# Development mode
+yarn start:dev
+
+# Production mode
+yarn start:prod
+```
+
 
 

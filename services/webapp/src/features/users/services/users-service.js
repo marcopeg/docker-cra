@@ -1,4 +1,5 @@
-import { getJSON } from 'lib/request'
+
+import { getJSON } from '@marcopeg/utils/lib/request'
 
 import {
     setList,
