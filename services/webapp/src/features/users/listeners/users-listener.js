@@ -1,5 +1,5 @@
 
-import createHistoryRouter from 'lib/redux-history-router'
+import createHistoryRouter from 'redux-history-router'
 import { LOCATION_CHANGE } from 'features/location'
 
 import {

@@ -1,9 +1,12 @@
-import { getJSON } from '@marcopeg/utils/lib/request'
 
 import {
     setList,
     setDetails,
 } from '../reducers/posts-reducer'
+
+import * as request from 'lib/request'
+console.log(request)
+const getJSON = request.getJSON
 
 export const fetchPosts = () => (dispatch, getState) => {
     const { ssr } = getState()

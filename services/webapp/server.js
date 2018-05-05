@@ -55,6 +55,7 @@ const boot = async () => {
         winston.error('===== BOOT ERROR ======')
         winston.error(err.message)
         winston.debug(err)
+        console.log(err)
     }
 }
 
