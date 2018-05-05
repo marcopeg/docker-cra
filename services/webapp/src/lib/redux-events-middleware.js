@@ -5,7 +5,7 @@
 
 // const EventEmitter = require('events');
 
-import logger from './logger'
+import logger from '@marcopeg/utils/lib/logger'
 
 export class ReduxEvents {
     constructor () {

@@ -1,5 +1,5 @@
 
-import logger from 'lib/logger'
+import logger from '@marcopeg/utils/lib/logger'
 import matchPath from './match-path'
 
 /**
