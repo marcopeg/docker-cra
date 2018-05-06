@@ -67,3 +67,7 @@ export const staticRender = async (url, initialState = {}, settings = {}) => {
         },
     }
 }
+
+// create-react-app-ssr staticRender version signature
+// this is used to check for compatibility with the ssr library
+staticRender.ssrVersion = '0.0.2'
