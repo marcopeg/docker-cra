@@ -2,10 +2,8 @@ const winston = require('winston')
 const express = require('express')
 const compression = require('compression')
 
-// const { serveBuild } = require('../middlewares/serve-build')
 const { errorHandler } = require('../middlewares/error-handler')
-const { createApiRouter } = require('../routes/v1')
-const { createSsrRouter } = require('../routes/ssr')
+const { createAppRouter } = require('../routes')
 
 const app = express()
 
@@ -16,14 +14,7 @@ const app = express()
  */
 const init = (settings = {}) => {
     app.use(compression())
-
-    // serve data API
-    app.use('/api/v1', createApiRouter())
-
-    // ssr - serve client app
-    app.use(createSsrRouter(settings))
-
-    // handle errors
+    app.use(createAppRouter(settings))
     app.use(errorHandler)
 }
 
