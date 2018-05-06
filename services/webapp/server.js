@@ -38,6 +38,7 @@ const boot = async () => {
             ssrEnabled: getConfig('SSR_ENABLED'),
             ssrTimeout: getConfig('SSR_TIMEOUT'),
             ssrRoot: getConfig('SSR_ROOT'),
+            ssrBuild: getConfig('SSR_BUILD'),
             ssrPort: getConfig('SSR_PORT'),
             ssrDisableJs: getConfig('SSR_DISABLE_JS'),
             ssrUseWebpackJs: getConfig('SSR_USE_WEBPACK_JS', 'no'),

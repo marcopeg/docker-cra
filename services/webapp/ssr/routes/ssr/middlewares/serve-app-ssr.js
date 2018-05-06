@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const winston = require('winston')
 const { Helmet } = require('react-helmet')
-const { staticRender } = require('../../src/index.ssr')
+// const { staticRender } = require('../../../../src/index.ssr')
 
 const readFile = (filePath, encoding = 'utf8') => new Promise((resolve, reject) => {
     if (readFile.cache[filePath]) {
@@ -64,17 +64,24 @@ const prepHTML = (template, {
 
 /**
  * Settings:
- * - ssrRoot (string) - client app build folder
+ * - ssrBuild (string) - client app build folder
  * - ssrPort: (string) - ssr server port for default api calls
  * - ssrTimeout: (int) - rendering timeout in milliseconds
  * - ssrDisableJs: (string)[yes|no]
  * - ssrUseDynamicJs: (string)[yes|no]
  * - nodeEnv: (string)[development|production]
  */
+let staticRender = null
 const serveAppSSR = (settings = {}) => async (req, res, next) => {
     try {
         winston.verbose(`[ssr] ${req.url}`)
-        const filePath = path.resolve(path.join(settings.ssrRoot, 'index.html'))
+
+        // try to import the staticRender function from the app's source code
+        if (!staticRender) {
+            staticRender = require(path.join(settings.ssrRoot, 'index.ssr')).staticRender
+        }
+
+        const filePath = path.resolve(path.join(settings.ssrBuild, 'index.html'))
         const htmlTemplate = await readFile(filePath)
         const initialState = {
             ssr: {

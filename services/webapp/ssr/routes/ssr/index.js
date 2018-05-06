@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { serveBuild } = require('../middlewares/serve-build')
+const { serveBuild } = require('./middlewares/serve-build')
 
 /**
  * Router creator
@@ -13,10 +13,10 @@ const createSsrRouter = (settings) => {
     // serve client app
     let serveApp = null
     if (settings.ssrEnabled === 'yes') {
-        const { serveAppSSR } = require('../middlewares/serve-app-ssr')
+        const { serveAppSSR } = require('./middlewares/serve-app-ssr')
         serveApp = serveAppSSR
     } else {
-        const { serveAppStatic } = require('../middlewares/serve-app-static')
+        const { serveAppStatic } = require('./middlewares/serve-app-static')
         serveApp = serveAppStatic
     }
 
