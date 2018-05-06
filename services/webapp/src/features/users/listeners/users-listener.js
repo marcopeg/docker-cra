@@ -1,6 +1,6 @@
 
 import createHistoryRouter from 'redux-history-router'
-import { LOCATION_CHANGE } from 'features/location'
+import { LOCATION_CHANGE } from 'redux-events-middleware/lib/location'
 
 import {
     loadUsers,

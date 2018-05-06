@@ -1,6 +1,6 @@
 
 export default [
-    require('./location'),
+    require('redux-events-middleware/lib/location'),
     require('./dashboard'),
     require('./users'),
     require('./posts'),
