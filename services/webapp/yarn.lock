@@ -2,9 +2,11 @@
 # yarn lockfile v1
 
 
-"@marcopeg/utils@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@marcopeg/utils/-/utils-1.5.0.tgz#b4b7980b5f2ab44b80f0bbbb9ab784c5349975b2"
+"@marcopeg/utils@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@marcopeg/utils/-/utils-1.6.0.tgz#61da5ee520ed5de5def3761d4dbf97143f214aab"
+  dependencies:
+    babel-runtime "^6.26.0"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -2370,7 +2372,7 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
 
-es6-promise@^4.0.5:
+es6-promise@^4.0.5, es6-promise@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
 
@@ -3958,7 +3960,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomorphic-fetch@^2.1.1:
+isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -5345,10 +5347,6 @@ path-to-regexp@^1.0.1, path-to-regexp@^1.7.0:
   dependencies:
     isarray "0.0.1"
 
-path-to-regexp@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.2.1.tgz#90b617025a16381a879bc82a38d4e8bdeb2bcf45"
-
 path-type@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-3.0.0.tgz#cef31dc8e0a1a3bb0d105c0cd97cf3bf47f4e36f"
@@ -6183,15 +6181,17 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-events-middleware@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/redux-events-middleware/-/redux-events-middleware-1.2.0.tgz#b88dbe3f3fe15ddd56bb01b5f1da90835dd99b16"
-
-redux-history-router@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/redux-history-router/-/redux-history-router-1.2.1.tgz#e7bd9ded117e2a0d53d191b219c3ec95cfd3627d"
+redux-events-middleware@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/redux-events-middleware/-/redux-events-middleware-1.3.0.tgz#9bedfb25a0427c50821b27657cc9f0146b11a572"
   dependencies:
-    path-to-regexp "^2.2.1"
+    babel-runtime "^6.26.0"
+
+redux-history-router@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/redux-history-router/-/redux-history-router-1.3.0.tgz#3f8354fb96d2dc2782b383304373c646b8a7340d"
+  dependencies:
+    babel-runtime "^6.26.0"
 
 redux-thunk@^2.2.0:
   version "2.2.0"
