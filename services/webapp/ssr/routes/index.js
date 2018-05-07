@@ -1,5 +1,5 @@
 const express = require('express')
-const { createSSRRouter } = require('create-react-app-ssr')
+const { createSSRRouter } = require('create-react-app-ssr/lib/create-ssr-router')
 const { createApiRouter } = require('./v1')
 
 const createAppRouter = (settings) => {

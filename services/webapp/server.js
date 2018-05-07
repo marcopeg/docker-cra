@@ -1,3 +1,4 @@
+const path = require('path')
 // const Sequelize = require('sequelize')
 // const elasticsearch = require('elasticsearch')
 
@@ -29,26 +30,38 @@ const { get: getConfig } = require('@marcopeg/utils/lib/config')
 const env = require('./ssr/services/env')
 const server = require('./ssr/services/server')
 
+// Env Defaults
+const defaultEnv = {
+    ssrEnabled: 'yes',
+    ssrTimeout: 5000,
+    ssrRoot: path.join(__dirname, 'src'),
+    ssrBuild: path.join(__dirname, 'build'),
+    ssrPort: 8080,
+    ssrDisableJs: 'no',
+    ssrUseWebpackJs: 'no',
+}
+
+// Boot the app
 const boot = async () => {
     try {
         // init services
         winston.verbose('[boot] init services...')
         await env.init()
         await server.init({
-            ssrEnabled: getConfig('SSR_ENABLED'),
-            ssrTimeout: getConfig('SSR_TIMEOUT'),
-            ssrRoot: getConfig('SSR_ROOT'),
-            ssrBuild: getConfig('SSR_BUILD'),
-            ssrPort: getConfig('SSR_PORT'),
-            ssrDisableJs: getConfig('SSR_DISABLE_JS'),
-            ssrUseWebpackJs: getConfig('SSR_USE_WEBPACK_JS', 'no'),
+            ssrEnabled: getConfig('SSR_ENABLED', defaultEnv.ssrEnabled),
+            ssrTimeout: getConfig('SSR_TIMEOUT', defaultEnv.ssrTimeout),
+            ssrRoot: getConfig('SSR_ROOT', defaultEnv.ssrRoot),
+            ssrBuild: getConfig('SSR_BUILD', defaultEnv.ssrBuild),
+            ssrPort: getConfig('SSR_PORT', defaultEnv.ssrPort),
+            ssrDisableJs: getConfig('SSR_DISABLE_JS', defaultEnv.ssrDisableJs),
+            ssrUseWebpackJs: getConfig('SSR_USE_WEBPACK_JS', defaultEnv.ssrUseWebpackJs),
             nodeEnv: getConfig('NODE_ENV'),
         })
 
         // start services
         winston.verbose('[boot] start services...')
         await server.start({
-            port: getConfig('SSR_PORT'),
+            port: getConfig('SSR_PORT', defaultEnv.ssrPort),
         })
 
         winston.verbose('[boot] complete!')
@@ -56,7 +69,6 @@ const boot = async () => {
         winston.error('===== BOOT ERROR ======')
         winston.error(err.message)
         winston.debug(err)
-        console.log(err)
     }
 }
 

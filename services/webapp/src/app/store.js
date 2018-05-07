@@ -13,8 +13,7 @@ import thunk from 'redux-thunk'
 
 import { routerMiddleware } from 'react-router-redux'
 import { ReduxEvents } from 'redux-events-middleware'
-
-import createSSRContext from 'lib/ssr'
+import { createSSRContext } from 'create-react-app-ssr/lib/create-ssr-context'
 
 import { configServices } from './services'
 import { configListeners } from './listeners'
