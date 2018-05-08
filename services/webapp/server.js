@@ -20,6 +20,9 @@ require('babel-register')({
     ],
     plugins: [
         [ 'module-resolver', { root: ['./src'] } ],
+        'syntax-dynamic-import',
+        'dynamic-import-node',
+        'react-loadable/babel',
     ],
 })
 // <--> ES6 Compatibility (for client-side code)
@@ -65,13 +68,8 @@ const boot = async () => {
             nodeEnv: getConfig('NODE_ENV'),
         })
 
-        require('./src/index.ssr')
         const Loadable = require('react-loadable') // eslint-disable-line
-        await (() => new Promise((resolve, reject) => {
-            Loadable.preloadAll()
-                .then(resolve)
-                .catch(reject)
-        }))
+        await Loadable.preloadAll()
 
         // start services
         winston.verbose('[boot] start services...')

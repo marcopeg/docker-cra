@@ -15,14 +15,14 @@ export const listeners = []
 // export { default as PostDetails } from './containers/PostDetails'
 
 export const Posts = loadable({
-    loader: () => require('./containers/Posts'),
+    loader: () => import('./containers/Posts'),
     loading () {
         return <div>loading</div>
     },
 })
 
 export const PostDetails = loadable({
-    loader: () => require('./containers/PostDetails'),
+    loader: () => import('./containers/PostDetails'),
     loading () {
         return <div>loading</div>
     },

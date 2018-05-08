@@ -16,7 +16,7 @@ export const listeners = [
 // export { default as Users } from './containers/Users'
 
 export const Users = loadable({
-    loader: () => require('./containers/Users'),
+    loader: () => import('./containers/Users'),
     loading () {
         return <div>loading</div>
     },
