@@ -14,7 +14,10 @@ winston.verbose('[boot] warming up...')
 require('ignore-styles')
 require('babel-register')({
     ignore: /\/(build|node_modules)\//,
-    presets: [ 'env', 'react-app' ],
+    presets: [
+        [ 'env', {'targets': { 'node': 'current', 'browsers': [ 'last 2 versions', 'safari >= 7' ] }}], // eslint-disable-line
+        'react-app',
+    ],
     plugins: [
         [ 'module-resolver', { root: ['./src'] } ],
     ],
@@ -62,6 +65,14 @@ const boot = async () => {
             nodeEnv: getConfig('NODE_ENV'),
         })
 
+        require('./src/index.ssr')
+        const Loadable = require('react-loadable') // eslint-disable-line
+        await (() => new Promise((resolve, reject) => {
+            Loadable.preloadAll()
+                .then(resolve)
+                .catch(reject)
+        }))
+
         // start services
         winston.verbose('[boot] start services...')
         await server.start({
@@ -73,6 +84,7 @@ const boot = async () => {
         winston.error('===== BOOT ERROR ======')
         winston.error(err.message)
         winston.debug(err)
+        console.log(err)
     }
 }
 

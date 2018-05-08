@@ -1,4 +1,3 @@
-/* eslint react/prefer-stateless-function: off */
 import React from 'react'
 import PropTypes from 'prop-types'
 import radium from 'radium'
@@ -97,4 +96,5 @@ Content.propTypes = {
 
 const StyledPosts = radium(Posts)
 export default connect(state2props, dispatch2props)(StyledPosts)
+
 
