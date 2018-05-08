@@ -5,9 +5,9 @@
   "scripts": {
     "start": "react-app-rewired start",
     "start:dev:app": "react-app-rewired start",
-    "start:dev:api": "NODE_ENV=development SSR=true nodemon --watch ssr -e js server",
+    "start:dev:api": "NODE_ENV=development nodemon --watch ssr -e js server",
     "start:dev": "yarn && ./node_modules/.bin/npm-run-all --parallel start:dev:*",
-    "start:prod:api": "NODE_ENV=production SSR=true node server",
+    "start:prod:api": "NODE_ENV=production node server",
     "start:prod": "yarn && yarn build && yarn start:prod:api",
     "build": "react-app-rewired build",
     "analyze": "source-map-explorer build/static/js/main.*",
