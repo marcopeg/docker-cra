@@ -41,6 +41,7 @@ const defaultEnv = {
     ssrPort: 8080,
     ssrDisableJs: 'no',
     ssrUseWebpackJs: 'no',
+    ssrBlacklist: [],
 }
 
 // Boot the app
@@ -57,6 +58,7 @@ const boot = async () => {
             ssrPort: getConfig('SSR_PORT', defaultEnv.ssrPort),
             ssrDisableJs: getConfig('SSR_DISABLE_JS', defaultEnv.ssrDisableJs),
             ssrUseWebpackJs: getConfig('SSR_USE_WEBPACK_JS', defaultEnv.ssrUseWebpackJs),
+            ssrBlacklist: getConfig('SSR_BLACKLIST', defaultEnv.ssrBlacklist),
             nodeEnv: getConfig('NODE_ENV'),
         })
 
