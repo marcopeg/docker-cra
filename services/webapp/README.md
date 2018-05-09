@@ -22,3 +22,5 @@ Add to package.json
 "homepage": "./"
 
 ```
+
+https://github.com/johnkmzhou/cordova-create-react-app
