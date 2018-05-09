@@ -12,3 +12,15 @@ Cherry pick routes that you don't want to server side render:
 ```
 SSR_BLACKLIST=/users*,/foo/:id/list
 ```
+
+
+## Run in Cordova
+
+```
+Add to package.json
+
+"homepage": "./"
+
+```
+
+https://github.com/johnkmzhou/cordova-create-react-app

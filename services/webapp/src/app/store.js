@@ -21,7 +21,7 @@ import reducers from './reducers'
 
 export const createStore = (history, initialState = {}) => {
     const events = new ReduxEvents()
-    const ssr = createSSRContext(initialState.ssr || {})
+    const ssrContext = createSSRContext(initialState.ssr || {})
 
     const enhancers = []
     const middleware = [
@@ -47,7 +47,7 @@ export const createStore = (history, initialState = {}) => {
     const store = createReduxStore(
         combineReducers({
             ...reducers,
-            ...ssr.reducers,
+            ...ssrContext.reducers,
         }),
         {
             ...initialState,
@@ -71,6 +71,6 @@ export const createStore = (history, initialState = {}) => {
         history,
         isReady,
         events,
-        ssr,
+        ssrContext,
     }
 }

@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'development' && !process.env.SSR && window) {
         hotHistory = window.__patchReduxHotLoading__.hotHistory
         hotStore = window.__patchReduxHotLoading__.hotStore
     }
+
 // production or SSR way:
 // it is important that both history and store are created with
 // per-request scope so to do not mess with concurrent server side rendering!
@@ -33,7 +34,7 @@ if (process.env.NODE_ENV === 'development' && !process.env.SSR && window) {
 }
 
 export const history = hotHistory
-export const { store, isReady } = hotStore
+export const { store, events, isReady } = hotStore
 
 isReady
     .then(() => hydrate(<Root store={store} history={history} />, document.getElementById('root')))

@@ -11,6 +11,7 @@ import { Posts, PostDetails } from 'features/posts'
 import getStyles from './App.style'
 const styles = getStyles()
 
+
 /**
  * Component
  */
