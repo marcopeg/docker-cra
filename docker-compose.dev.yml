@@ -18,6 +18,7 @@ services:
             SSR_DISABLE_JS: ${SSR_DISABLE_JS:-no}
             SSR_USE_WEBPACK_JS: ${SSR_USE_WEBPACK_JS-no}
             SSR_BLACKLIST: ${SSR_BLACKLIST-}
+            PUBLIC_URL: ${PUBLIC_URL:-xxxxx}
         volumes:
             - ./services/webapp:/usr/src/app
         working_dir: /usr/src/app

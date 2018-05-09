@@ -20,13 +20,17 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
+  console.log('[ws] nodeEnv', process.env.NODE_ENV)
   if (
-    process.env.NODE_ENV === 'production' && 
+    // process.env.NODE_ENV === 'production' && 
     'serviceWorker' in navigator
   ) {
+    console.log('[ws] PUBLIC_URL', process.env.PUBLIC_URL)
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
+    console.log('[ws] publicUrl', publicUrl)
     if (publicUrl.origin !== window.location.origin) {
+      console.log('SERVICE WORKER WILL NOT REGISTER', publicUrl.origin, window.location.origin )
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
       // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
