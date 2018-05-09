@@ -13,9 +13,9 @@ services:
             SSR_BUILD: ${SSR_BUILD:-/usr/src/app/build}
             SSR_ROOT: ${SSR_ROOT:-/usr/src/app/src}
             SSR_TIMEOUT: ${SSR_TIMEOUT:-5000}
-            SSR_DISABLE_JS: ${SSR_DISABLE_JS-no}
-            SSR_USE_WEBPACK_JS: ${SSR_USE_WEBPACK_JS-no}
-            SSR_BLACKLIST: ${SSR_BLACKLIST-}
+            SSR_DISABLE_JS: ${SSR_DISABLE_JS:-no}
+            SSR_USE_WEBPACK_JS: ${SSR_USE_WEBPACK_JS:-no}
+            SSR_BLACKLIST: ${SSR_BLACKLIST:-}
         restart: always
 
     proxy:
