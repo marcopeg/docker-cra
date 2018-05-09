@@ -8,9 +8,14 @@ const rewireReactLoadable = require('create-react-app-ssr/lib/rewire-react-loada
 module.exports = function override (config, env) {
     config = rewireEslint(config, env)
     config = rewireStylus(config, env)
-    config = rewireInlinSource(config, env, {
-        inlineSource: '.(css)$',
-    })
-    config = rewireReactLoadable(config)
+
+    // production bundle optimizations
+    if (process.env.NODE_ENV === 'production') {
+        config = rewireInlinSource(config, env, {
+            inlineSource: '.(css)$',
+        })
+        config = rewireReactLoadable(config)
+    }
+
     return config
 }
