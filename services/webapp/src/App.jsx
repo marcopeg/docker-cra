@@ -27,6 +27,7 @@ const App = (props) => (
         <Route path="/users/:userId?" component={Users} />
         <Route path="/posts" exact component={Posts} />
         <Route path="/posts/:postId" component={PostDetails} />
+        <span>t1</span>
     </div>
 )
 
