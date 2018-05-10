@@ -75,3 +75,7 @@ export const loadUserPosts = userId => async (dispatch, getState) => {
         console.error(err)
     }
 }
+
+export const init = () => () => {
+    console.log('init service users')
+}

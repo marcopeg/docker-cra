@@ -11,8 +11,8 @@ const styles = getStyles()
 /**
  * State Management
  */
-const state2props = ({ app }) => ({
-    title: app.name,
+const state2props = ({ menu }) => ({
+    title: menu.name,
 })
 
 const dispatch2props = {}

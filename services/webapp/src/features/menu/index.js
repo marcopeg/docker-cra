@@ -1,5 +1,7 @@
 
-export const reducers = {}
+export const reducers = {
+    menu: require('./reducers/menu-reducer').default,
+}
 
 export const services = []
 

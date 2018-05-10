@@ -1,7 +1,8 @@
 
 export default [
     require('redux-events-middleware/lib/location'),
+    require('./menu'),
     require('./dashboard'),
-    require('./users'),
     require('./posts'),
+    require('./users'),
 ]

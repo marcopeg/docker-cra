@@ -17,9 +17,10 @@ import { createSSRContext } from 'create-react-app-ssr/lib/create-ssr-context'
 
 import { decorateStore } from 'react-redux-feature/lib/decorate-store'
 
-import { configServices } from './services'
-import { configListeners } from './listeners'
-import reducers from './reducers'
+// import { configServices } from './services'
+// import { configListeners } from './listeners'
+// import reducers from './reducers'
+import features from 'features'
 
 export const createStore = (history, initialState = {}) => {
     const events = new ReduxEvents()
@@ -46,10 +47,13 @@ export const createStore = (history, initialState = {}) => {
         ...enhancers,
     )
 
-    const combinedReducers = combineReducers({
-        ...reducers,
+    // merge initial static reducers with SSR helper
+    const initialReducers = {
+        // ...reducers,
         ...ssrContext.reducers,
-    })
+    }
+
+    const combinedReducers = combineReducers(initialReducers)
 
     const ssrInitialState = {
         ...initialState,
@@ -63,12 +67,14 @@ export const createStore = (history, initialState = {}) => {
     )
 
     // react-redux-feature
-    store = decorateStore(store, history, events)
+    store = decorateStore({ store, history, events, initialReducers })
 
     const isReady = new Promise(async (resolve, reject) => {
         try {
-            await configListeners(events)
-            await configServices(store, history)
+            for (const feature of features) {
+                await store.registerSyncFeature(feature)
+            }
+            await store.startSyncFeatures()
             resolve()
         } catch (err) {
             reject(err)

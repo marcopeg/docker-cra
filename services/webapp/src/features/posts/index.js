@@ -1,8 +1,10 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
+import postsReducer from './reducers/posts-reducer'
+
 export const reducers = {
-    posts: require('./reducers/posts-reducer').default,
+    posts: postsReducer,
 }
 
 export const services = [

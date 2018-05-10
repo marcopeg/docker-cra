@@ -1,8 +1,11 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
+import usersReducer from './reducers/users-reducer'
+// import usersListener from './listeners/users-listener'
+
 export const reducers = {
-    users: require('./reducers/users-reducer').default,
+    users: usersReducer,
 }
 
 export const services = [
@@ -10,7 +13,7 @@ export const services = [
      * Syncronous loading, single bundle optimization
      * (comment out if using code-splitting)
      */
-    // require('./services/users-service'),
+    require('./services/users-service'),
 ]
 
 export const listeners = [
