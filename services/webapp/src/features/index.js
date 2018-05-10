@@ -4,4 +4,5 @@ export default [
     require('./dashboard'),
     require('./users'),
     require('./posts'),
+    require('./menu'),
 ]

@@ -9,8 +9,8 @@ export const initialState = {
  * Actions
  */
 
-export const SET_VALUE = 'setValue@app'
-export const SET_IS_READY = 'setIsReady@app'
+export const SET_VALUE = 'setValue@menu'
+export const SET_IS_READY = 'setIsReady@menu'
 
 export const setValue = (key, value) => ({
     type: SET_VALUE,
