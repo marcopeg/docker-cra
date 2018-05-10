@@ -7,6 +7,7 @@ import { Menu } from 'features/menu'
 import { Dashboard } from 'features/dashboard'
 import { Users } from 'features/users'
 import { Posts, PostDetails } from 'features/posts'
+import { Images } from 'features/images'
 
 import getStyles from './App.style'
 const styles = getStyles()
@@ -27,6 +28,7 @@ const App = (props) => (
         <Route path="/users/:userId?" component={Users} />
         <Route path="/posts" exact component={Posts} />
         <Route path="/posts/:postId" component={PostDetails} />
+        <Route path="/images" component={Images} />
     </div>
 )
 

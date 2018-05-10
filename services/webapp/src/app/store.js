@@ -15,6 +15,8 @@ import { routerMiddleware } from 'react-router-redux'
 import { ReduxEvents } from 'redux-events-middleware'
 import { createSSRContext } from 'create-react-app-ssr/lib/create-ssr-context'
 
+import { decorateStore } from 'react-redux-feature/lib/decorate-store'
+
 import { configServices } from './services'
 import { configListeners } from './listeners'
 import reducers from './reducers'
@@ -44,17 +46,24 @@ export const createStore = (history, initialState = {}) => {
         ...enhancers,
     )
 
-    const store = createReduxStore(
-        combineReducers({
-            ...reducers,
-            ...ssrContext.reducers,
-        }),
-        {
-            ...initialState,
-            ssr: null,
-        },
+    const combinedReducers = combineReducers({
+        ...reducers,
+        ...ssrContext.reducers,
+    })
+
+    const ssrInitialState = {
+        ...initialState,
+        ssr: null,
+    }
+
+    let store = createReduxStore(
+        combinedReducers,
+        ssrInitialState,
         composedEnhancers,
     )
+
+    // react-redux-feature
+    store = decorateStore(store, history, events)
 
     const isReady = new Promise(async (resolve, reject) => {
         try {
