@@ -1,18 +1,13 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
-import postsReducer from './reducers/posts-reducer'
-
-
 /**
  * Synchronous Feature API
  * every resource listed here will partake into the main bundle
  * (reducers are required for correct SSR)
  */
 
-export const reducers = {
-    posts: postsReducer,
-}
+export const reducers = {}
 
 export const services = []
 

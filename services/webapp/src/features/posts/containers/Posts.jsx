@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import radium from 'radium'
+import connectStore from 'react-redux-feature/lib/connect-store'
 import { connect } from 'react-redux'
 
 import Page from 'layouts/Page'
@@ -8,6 +9,7 @@ import PageSection from 'layouts/Page/Section'
 import List from 'components/List'
 import Link from 'components/RadiumLink'
 
+import registerFeature from '../register'
 import { loadPosts } from '../services/posts-service'
 
 import getStyles from './Posts.style'
@@ -93,6 +95,5 @@ Content.propTypes = {
  */
 
 const StyledPosts = radium(Posts)
-export default connect(state2props, dispatch2props)(StyledPosts)
-
-
+const ConnectedPosts = connect(state2props, dispatch2props)(StyledPosts)
+export default connectStore(registerFeature)(ConnectedPosts)

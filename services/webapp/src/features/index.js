@@ -8,6 +8,4 @@ export default [
     require('./menu'),
     require('./dashboard'),
     require('./users'),
-    require('./posts'),
-    require('./gallery'),
 ]
