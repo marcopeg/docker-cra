@@ -5,7 +5,6 @@ import { hydrate } from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
 import { createStore } from 'app/store'
 import Root from 'app/Root'
-import registerServiceWorker from './registerServiceWorker'
 
 // Import global stylesheet entrypoint
 // any loader based stylesheet should be imported there
@@ -39,7 +38,7 @@ export const { store, events, isReady } = hotStore
 
 isReady
     .then(() => hydrate(<Root store={store} history={history} />, document.getElementById('root')))
-    .then(registerServiceWorker)
+    // .then(require('./registerServiceWorker').default)
     .catch((err) => {
         document.body.innerHTML = err ? err.message : 'unknown error'
         console.error(err) // eslint-disable-line

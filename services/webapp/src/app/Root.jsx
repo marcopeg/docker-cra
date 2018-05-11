@@ -19,8 +19,5 @@ const Root = ({ store, history, userAgent }) => (
     </Provider>
 )
 
-//     
-    //         
-    //     </Router>
 
 export default Root

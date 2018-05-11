@@ -1,17 +1,13 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
-import galleryReducer from './reducers/gallery-reducer'
-
 /**
  * Synchronous Feature API
  * every resource listed here will partake into the main bundle
  * (reducers are required for correct SSR)
  */
 
-export const reducers = {
-    gallery: galleryReducer,
-}
+export const reducers = {}
 export const services = []
 export const listeners = []
 
