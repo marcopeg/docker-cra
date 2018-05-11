@@ -1,5 +1,5 @@
 
-// import { fonts, colors } from 'app/styles'
+// import { fonts, colors } from 'styles'
 
 const getStyles = () => ({})
 

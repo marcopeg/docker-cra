@@ -1,8 +1,7 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
-import usersReducer from './reducers/users-reducer'
-import usersListener from './listeners/users-listener'
+import galleryReducer from './reducers/gallery-reducer'
 
 /**
  * Synchronous Feature API
@@ -11,14 +10,11 @@ import usersListener from './listeners/users-listener'
  */
 
 export const reducers = {
-    users: usersReducer,
+    gallery: galleryReducer,
 }
-
 export const services = []
+export const listeners = []
 
-export const listeners = [
-    usersListener,
-]
 
 /**
  * Asyncronous loading for code-splitting optimization
@@ -26,7 +22,7 @@ export const listeners = [
  * delegated to an on-demain loading
  */
 
-export const Users = loadable({
-    loader: () => import('./containers/Users'),
+export const Gallery = loadable({
+    loader: () => import('./containers/Gallery'),
     loading: () => null,
 })

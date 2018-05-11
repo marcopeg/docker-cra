@@ -30,9 +30,7 @@ const dispatch2props = {
  * Component
  */
 
-const Loading = () => (
-    <div>loading author...</div>
-)
+const Loading = () => null
 
 const Content = ({ name, email, address }) => (
     <div>

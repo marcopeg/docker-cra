@@ -11,8 +11,8 @@ const styles = getStyles()
 /**
  * State Management
  */
-const state2props = ({ app }) => ({
-    title: app.name,
+const state2props = ({ menu }) => ({
+    title: menu.name,
 })
 
 const dispatch2props = {}
@@ -31,6 +31,7 @@ const Menu = ({ title }) => (
             <Link to="/" style={styles.item}>Home</Link>
             <Link to="/posts" style={styles.item}>Posts</Link>
             <Link to="/users" style={styles.item}>Users</Link>
+            <Link to="/gallery" style={styles.item}>Gallery</Link>
         </div>
     </div>
 )

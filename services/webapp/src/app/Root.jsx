@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
     eslint
         import/prefer-default-export: off,
@@ -8,7 +9,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 
-import App from '../../App'
+import App from '../App'
 
 const Root = ({ store, history, userAgent }) => (
     <Provider store={store}>
@@ -17,5 +18,9 @@ const Root = ({ store, history, userAgent }) => (
         </Router>
     </Provider>
 )
+
+//     
+    //         
+    //     </Router>
 
 export default Root

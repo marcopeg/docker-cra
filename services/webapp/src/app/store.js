@@ -14,10 +14,12 @@ import thunk from 'redux-thunk'
 import { routerMiddleware } from 'react-router-redux'
 import { ReduxEvents } from 'redux-events-middleware'
 import { createSSRContext } from 'create-react-app-ssr/lib/create-ssr-context'
+import {
+    getReducers as getFeaturesReducers,
+    decorateStore as decorateStoreWithFeatures,
+} from 'react-redux-feature/lib/decorate-store'
 
-import { configServices } from './services'
-import { configListeners } from './listeners'
-import reducers from './reducers'
+import features from 'features'
 
 export const createStore = (history, initialState = {}) => {
     const events = new ReduxEvents()
@@ -32,6 +34,7 @@ export const createStore = (history, initialState = {}) => {
 
     // redux dev tools (development & client only)
     if (process.env.NODE_ENV === 'development' && !process.env.SSR) {
+    // if (!process.env.SSR) { // heavy development mode
         const { devToolsExtension } = window
 
         if (typeof devToolsExtension === 'function') {
@@ -44,22 +47,40 @@ export const createStore = (history, initialState = {}) => {
         ...enhancers,
     )
 
-    const store = createReduxStore(
-        combineReducers({
-            ...reducers,
-            ...ssrContext.reducers,
-        }),
-        {
-            ...initialState,
-            ssr: null,
-        },
+    // merge feature's static reducers with SSR helper
+    const initialReducers = {
+        ...getFeaturesReducers(features),
+        ...ssrContext.reducers,
+    }
+
+    const combinedReducers = combineReducers(initialReducers)
+
+    // SSR - replace the ssr helper so that can be initialize
+    // SSR - on the client with the proper functionalities
+    const ssrInitialState = {
+        ...initialState,
+        ssr: null,
+    }
+
+    let store = createReduxStore(
+        combinedReducers,
+        ssrInitialState,
         composedEnhancers,
     )
 
+    // react-redux-deatures
+    // add features capabilities to the store
+    store = decorateStoreWithFeatures({ store, history, events, initialReducers })
+
+    // Initialize dynamic stuff
+    // (client side only)
     const isReady = new Promise(async (resolve, reject) => {
         try {
-            await configListeners(events)
-            await configServices(store, history)
+            // react-redux-deatures
+            // start registered features services
+            await store.registerSyncFeatures(features)
+            await store.startSyncFeatures()
+
             resolve()
         } catch (err) {
             reject(err)
