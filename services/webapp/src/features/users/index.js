@@ -1,24 +1,15 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
-// import usersReducer from './reducers/users-reducer'
-// import usersListener from './listeners/users-listener'
-
 /**
  * Synchronous Feature API
  * every resource listed here will partake into the main bundle
  * (reducers are required for correct SSR)
  */
 
-export const reducers = {
-    // users: usersReducer,
-}
-
+export const reducers = {}
 export const services = []
-
-export const listeners = [
-    // usersListener,
-]
+export const listeners = []
 
 /**
  * Asyncronous loading for code-splitting optimization

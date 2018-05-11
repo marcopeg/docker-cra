@@ -8,9 +8,7 @@ import loadable from 'react-loadable'
  */
 
 export const reducers = {}
-
 export const services = []
-
 export const listeners = []
 
 
