@@ -34,9 +34,7 @@ const dispatch2props = {
  * Component
  */
 
-const Loading = () => (
-    <div>loading related posts...</div>
-)
+const Loading = () => null
 
 const decoratePostsList = posts =>
     posts.map(post => ({

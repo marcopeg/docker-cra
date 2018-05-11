@@ -1,5 +1,5 @@
 
-import { colors } from 'app/styles'
+import { colors } from 'styles'
 
 const getStyles = () => ({
     wrapper: {

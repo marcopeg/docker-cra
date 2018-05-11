@@ -31,9 +31,7 @@ const dispatch2props = {
  * Component
  */
 
-const Loading = () => (
-    <span>loading...</span>
-)
+const Loading = () => null
 
 const decorateListItems = items =>
     items.map(item => ({

@@ -9,7 +9,7 @@ import Root from 'app/containers/Root'
 
 // Import global stylesheet entrypoint
 // any loader based stylesheet should be imported there
-import 'app/styles'
+import 'styles'
 
 // History & Store singleton setup in development mode
 // prevents multiple store instances when accepting HMR data
