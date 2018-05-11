@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import radium from 'radium'
 import { connect } from 'react-redux'
+import connectStore from 'react-redux-feature/lib/connect-store'
 import { Route, Redirect } from 'react-router-dom'
 
 import Page from 'layouts/Page'
@@ -9,6 +10,7 @@ import PageSection from 'layouts/Page/Section'
 import List from 'components/List'
 import Link from 'components/RadiumLink'
 
+import registerFeature from '../register'
 import UserDetails from './UserDetails'
 import UserPosts from './UserPosts'
 import UserMenu from './UserMenu'
@@ -106,4 +108,5 @@ Users.defaultProps = {
  */
 
 const StyledUsers = radium(Users)
-export default connect(state2props, dispatch2props)(StyledUsers)
+const ConnectedUsers = connect(state2props, dispatch2props)(StyledUsers)
+export default connectStore(registerFeature)(ConnectedUsers)

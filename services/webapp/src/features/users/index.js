@@ -1,8 +1,8 @@
 import React from 'react'
 import loadable from 'react-loadable'
 
-import usersReducer from './reducers/users-reducer'
-import usersListener from './listeners/users-listener'
+// import usersReducer from './reducers/users-reducer'
+// import usersListener from './listeners/users-listener'
 
 /**
  * Synchronous Feature API
@@ -11,13 +11,13 @@ import usersListener from './listeners/users-listener'
  */
 
 export const reducers = {
-    users: usersReducer,
+    // users: usersReducer,
 }
 
 export const services = []
 
 export const listeners = [
-    usersListener,
+    // usersListener,
 ]
 
 /**

@@ -1,5 +1,6 @@
 
 import { getJSON } from '@marcopeg/utils/lib/request'
+import { rerun } from 'redux-events-middleware/lib/location/services/location-service'
 
 import {
     setList,
@@ -75,3 +76,7 @@ export const loadUserPosts = userId => async (dispatch, getState) => {
         console.error(err)
     }
 }
+
+// re-run the last route onload
+// that is because this feature is loaded after a route action
+export const start = (store, history) => rerun(history)
