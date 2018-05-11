@@ -4,7 +4,7 @@ import React from 'react'
 import { hydrate } from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
 import { createStore } from 'app/store'
-import Root from 'app/containers/Root'
+import Root from 'app/Root'
 // import registerServiceWorker from './registerServiceWorker'
 
 // Import global stylesheet entrypoint
