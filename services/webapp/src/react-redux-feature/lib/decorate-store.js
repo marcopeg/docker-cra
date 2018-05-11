@@ -68,6 +68,31 @@ export const decorateStore = ({ store, history, events, initialReducers }) => {
         }
     }
 
+    store.registerAsyncFeature = async (feature) => {
+        // inject stores
+        for (const reducer in feature.reducers) {
+            store.registerReducer(reducer, feature.reducers[reducer])
+        }
+
+        // register listeners
+        for (const listener of feature.listeners) {
+            await store.registerListener(listener)
+        }
+
+        // init
+        for (const service of feature.services) {
+            if (service.init) {
+                await service.init(store, history)(store.dispatch, store.getState)
+            }
+        }
+        // start
+        for (const service of feature.services) {
+            if (service.start) {
+                await service.start(store, history)(store.dispatch, store.getState)
+            }
+        }
+    }
+
     return store
 }
 

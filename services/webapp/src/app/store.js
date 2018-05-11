@@ -33,7 +33,8 @@ export const createStore = (history, initialState = {}) => {
     ]
 
     // redux dev tools (development & client only)
-    if (process.env.NODE_ENV === 'development' && !process.env.SSR) {
+    // if (process.env.NODE_ENV === 'development' && !process.env.SSR) {
+    if (!process.env.SSR) { // eslint-disable-line
         const { devToolsExtension } = window
 
         if (typeof devToolsExtension === 'function') {
@@ -46,7 +47,7 @@ export const createStore = (history, initialState = {}) => {
         ...enhancers,
     )
 
-    // merge initial static reducers with SSR helper
+    // merge feature's static reducers with SSR helper
     const initialReducers = {
         ...getFeaturesReducers(features),
         ...ssrContext.reducers,

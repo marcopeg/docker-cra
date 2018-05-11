@@ -5,4 +5,5 @@ export default [
     require('./users'),
     require('./posts'),
     require('./menu'),
+    require('./gallery'),
 ]
