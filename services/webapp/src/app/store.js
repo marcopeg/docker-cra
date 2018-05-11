@@ -55,7 +55,8 @@ export const createStore = (history, initialState = {}) => {
 
     const combinedReducers = combineReducers(initialReducers)
 
-    // SSR - replace the ssr helper
+    // SSR - replace the ssr helper so that can be initialize
+    // SSR - on the client with the proper functionalities
     const ssrInitialState = {
         ...initialState,
         ssr: null,

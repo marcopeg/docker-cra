@@ -16,9 +16,9 @@ const init = (settings = {}) => {
     app.use(compression())
 
     // @TEST: slow down
-    app.use((req, res, next) => {
-        setTimeout(next, 500)
-    })
+    // app.use((req, res, next) => {
+    //     setTimeout(next, 500)
+    // })
 
     app.use(createAppRouter(settings))
     app.use(errorHandler)

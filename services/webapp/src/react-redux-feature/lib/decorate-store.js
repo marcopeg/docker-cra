@@ -36,13 +36,14 @@ export const decorateStore = ({ store, history, events, initialReducers }) => {
         events && events.registerListener(listener)
     }
 
+    store.registerFeature = () => {
+        console.log('register feature')
+    }
+
     store.registerSyncFeature = (feature) => {
         store.syncFeatures.push(feature)
-        // for (const reducer in feature.reducers) {
-        //     store.registerReducer(reducer, feature.reducers[reducer])
-        // }
         for (const listener of feature.listeners) {
-            store.registerListener(listener.default)
+            store.registerListener(listener)
         }
     }
 
