@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ReducerRegistry, recombine } from './reducer-registry'
 
 export const decorateStore = ({ store, history, events, initialReducers }) => {
@@ -35,15 +36,18 @@ export const decorateStore = ({ store, history, events, initialReducers }) => {
         events && events.registerListener(listener)
     }
 
-    store.registerSyncFeature = async (feature) => {
+    store.registerSyncFeature = (feature) => {
         store.syncFeatures.push(feature)
-        for (const reducer in feature.reducers) {
-            await store.registerReducer(reducer, feature.reducers[reducer])
-        }
+        // for (const reducer in feature.reducers) {
+        //     store.registerReducer(reducer, feature.reducers[reducer])
+        // }
         for (const listener of feature.listeners) {
-            await store.registerListener(listener.default)
+            store.registerListener(listener.default)
         }
     }
+
+    store.registerSyncFeatures = features =>
+        features.forEach(feature => store.registerSyncFeature(feature))
 
     store.startSyncFeatures = async () => {
         let services = []
@@ -65,4 +69,14 @@ export const decorateStore = ({ store, history, events, initialReducers }) => {
     }
 
     return store
+}
+
+export const getReducers = (features) => {
+    const reducers = {}
+    for (const feature of features) {
+        for (const reducer in feature.reducers) {
+            reducers[reducer] = feature.reducers[reducer]
+        }
+    }
+    return reducers
 }

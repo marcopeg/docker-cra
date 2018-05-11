@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
     eslint
         import/prefer-default-export: off,
@@ -17,5 +18,9 @@ const Root = ({ store, history, userAgent }) => (
         </Router>
     </Provider>
 )
+
+//     
+    //         
+    //     </Router>
 
 export default Root
