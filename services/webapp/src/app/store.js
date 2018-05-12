@@ -33,8 +33,8 @@ export const createStore = (history, initialState = {}) => {
     ]
 
     // redux dev tools (development & client only)
-    if (process.env.NODE_ENV === 'development' && !process.env.SSR) {
-    // if (!process.env.SSR) { // heavy development mode
+    // if (process.env.NODE_ENV === 'development' && !process.env.SSR) {
+    if (!process.env.SSR) { // heavy development mode
         const { devToolsExtension } = window
 
         if (typeof devToolsExtension === 'function') {
