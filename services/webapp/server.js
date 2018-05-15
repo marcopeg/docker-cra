@@ -8,10 +8,9 @@ winston.level = process.env.LOG_LEVEL || 'verbose'
 
 winston.verbose('[boot] warming up...')
 
-// ES6 Compatibility (for client-side code)
+// SSR - ES6 Compatibility (for client-side code)
 // (this is needed only for **SSR_ENABLED=yes**)
 // (you can comment it out if not using SSR for better memory footprint)
-require('ignore-styles')
 require('babel-register')({
     ignore: /\/(build|node_modules)\//,
     presets: [
@@ -27,7 +26,10 @@ require('babel-register')({
 })
 // <--> ES6 Compatibility (for client-side code)
 
-// Isomorphic Fetch
+// SSR - Handle Images
+require('create-react-app-ssr/lib/create-ignore-styles').createIgnoreStyles()
+
+// SSR - Isomorphic Fetch
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 // <--> Isomorphic Fetch
