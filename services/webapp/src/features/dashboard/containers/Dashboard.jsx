@@ -5,6 +5,8 @@ import Page from 'layouts/Page'
 import Section from 'layouts/Page/Section'
 import Text from 'layouts/Page/Text'
 
+import reactImage from '../images/react.png'
+import react2Image from '../images/react.jpg'
 // import getStyles from './Dashboard.style'
 // const styles = getStyles()
 
@@ -41,6 +43,10 @@ const Dashboard = () => (
                 </ul>
                 <p>
                     <a href="https://github.com/marcopeg/docker-cra" target="_blank" rel="noopener noreferrer">Read the full README.md, and contribute on GitHub :-)</a>
+                </p>
+                <p>
+                    <img src={reactImage} alt="made with react" style={{ maxWidth: '100%' }} />
+                    <img src={react2Image} alt="made with react" style={{ maxWidth: '100%' }} />
                 </p>
             </Text>
         </Section>
