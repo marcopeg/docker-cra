@@ -6213,15 +6213,15 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-events-middleware@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/redux-events-middleware/-/redux-events-middleware-1.5.0.tgz#29d7e2229dd5d199dc172383dafb9692185f125b"
+redux-events-middleware@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/redux-events-middleware/-/redux-events-middleware-1.5.1.tgz#e28a82d2312373727ceba3756bca792245b0f797"
   dependencies:
     babel-runtime "^6.26.0"
 
-redux-history-router@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/redux-history-router/-/redux-history-router-1.3.0.tgz#3f8354fb96d2dc2782b383304373c646b8a7340d"
+redux-history-router@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/redux-history-router/-/redux-history-router-1.3.2.tgz#1e63199bb769a12306953b339d8245165ea736b6"
   dependencies:
     babel-runtime "^6.26.0"
 
