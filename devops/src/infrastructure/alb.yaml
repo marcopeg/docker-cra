@@ -1,0 +1,63 @@
+Description: Load balancer used to wrap ECS AutoScaling group
+
+Parameters:
+
+    StackName:
+        Type: String
+
+    VPC:
+        Type: AWS::EC2::VPC::Id
+
+    Subnet1:
+        Type: AWS::EC2::Subnet::Id
+    
+    Subnet2:
+        Type: AWS::EC2::Subnet::Id
+
+    SecurityGroup:
+        Type: AWS::EC2::SecurityGroup::Id
+
+Resources:
+
+#
+# Public Load Balancer
+#
+
+    ALB:
+        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+        Properties:
+            Name: !Sub ${StackName}-alb
+            Subnets:
+                - !Ref Subnet1
+                - !Ref Subnet2
+            SecurityGroups: 
+                - !Ref SecurityGroup
+            Tags: 
+                - Key: Name
+                  Value: !Sub ${StackName}-alb
+
+    DefaultTargetGroup:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        Properties:
+            Name: !Sub ${StackName}-alb-def-tg
+            VpcId: !Ref VPC
+            Port: 80
+            Protocol: HTTP
+
+    Listener:
+        Type: AWS::ElasticLoadBalancingV2::Listener
+        Properties:
+            LoadBalancerArn: !Ref ALB
+            Port: 80
+            Protocol: HTTP 
+            DefaultActions: 
+                - Type: forward
+                  TargetGroupArn: !Ref DefaultTargetGroup
+           
+Outputs:
+
+    Listener:
+        Value: !Ref Listener
+
+    PublicDNS:
+        Value: !GetAtt ALB.DNSName

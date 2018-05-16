@@ -1,0 +1,54 @@
+Description: Set up an EFS file system
+
+Parameters:
+
+    StackName:
+        Type: String
+
+    Subnet1:
+        Type: AWS::EC2::Subnet::Id
+
+    Subnet2:
+        Type: AWS::EC2::Subnet::Id
+
+    SecurityGroup:
+        Type: AWS::EC2::SecurityGroup::Id
+
+Resources:
+
+    ECSPersistentFileSystem:
+        Type: AWS::EFS::FileSystem
+        Properties:
+            FileSystemTags:
+                - Key: Name
+                  Value: !Ref StackName
+
+    MountTargetAZ1:
+        Type: AWS::EFS::MountTarget
+        Properties:
+            FileSystemId: !Ref ECSPersistentFileSystem
+            SubnetId: !Ref Subnet1
+            SecurityGroups:
+                - !Ref SecurityGroup
+
+    MountTargetAZ2:
+        Type: AWS::EFS::MountTarget
+        Properties:
+            FileSystemId: !Ref ECSPersistentFileSystem
+            SubnetId: !Ref Subnet2
+            SecurityGroups:
+                - !Ref SecurityGroup
+
+Outputs:
+
+    EFSPhysicalId:
+        Description: The EFS Filesystem Physical ID
+        Value: !Ref ECSPersistentFileSystem
+
+#     MountTargetAZ1:
+#         Description: The EFS Mount Target AZ1
+#         Value: !Ref MountTargetAZ1
+
+#     MountTargetAZ2:
+#         Description: The EFS Mount Target AZ2
+#         Value: !Ref MountTargetAZ2

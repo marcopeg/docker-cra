@@ -1,0 +1,8 @@
+
+STACK_REGION="eu-west-1"
+STACK_NAME="docker-cra"
+STACK_CAPABILITIES="CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+
+AWS_CLI_PROFILE="default"
+AWS_BUCKET_REGION="eu-west-1"
+AWS_BUCKET_NAME="24hr-marcopeg-cloudformation-stacks"
