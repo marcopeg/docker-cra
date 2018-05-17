@@ -29,7 +29,7 @@ const App = (props) => (
         <Route path="/posts" exact component={Posts} />
         <Route path="/posts/:postId" component={PostDetails} />
         <Route path="/gallery" component={Gallery} />
-        <span style={styles.version}>v0.0.1</span>
+        <span style={styles.version}>v0.0.3</span>
     </div>
 )
 

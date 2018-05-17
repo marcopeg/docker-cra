@@ -46,7 +46,7 @@ Mappings:
             SimpleNginxCount:           1
             DockerCRAPriority:          6100
             DockerCRACount:             1
-            DockerCRAVersion:           0.0.1
+            DockerCRAVersion:           0.0.3
 
         stage:
             # networking
@@ -83,6 +83,16 @@ Mappings:
             DockerCRAPriority:          2100
             DockerCRACount:             1
             DockerCRAVersion:           0.0.1
+
+Conditions:
+    IsBootRun: !Or
+        - !Equals [ !Ref EnvironmentMode, boot ]
+        - !Equals [ !Ref EnvironmentMode, init ]
+        - !Equals [ !Ref EnvironmentMode, up ]
+    IsInitRun: !Or
+        - !Equals [ !Ref EnvironmentMode, init ]
+        - !Equals [ !Ref EnvironmentMode, up ]
+    IsUpdateRun: !Equals [ !Ref EnvironmentMode, up ]
 
 Resources:
 
@@ -161,6 +171,7 @@ Resources:
     
     DockerCRA:
         Type: AWS::CloudFormation::Stack
+        Condition: IsUpdateRun
         Properties:
             TemplateURL:            !Sub "${S3TemplateRoot}/services/docker-cra.yaml"
             Parameters:

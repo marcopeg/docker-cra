@@ -38,8 +38,8 @@ Resources:
             DesiredCount: !Ref DesiredCount
             TaskDefinition: !Ref TaskDefinition
             LoadBalancers: 
-                - ContainerName: webapp
-                  ContainerPort: 80
+                - ContainerName: proxy
+                  ContainerPort: 3478
                   TargetGroupArn: !Ref TargetGroup
 
     TaskDefinition:
@@ -56,17 +56,17 @@ Resources:
                       - ContainerPort: 80
                   Environment:
                       - Name: NODE_ENV
-                        Value: production
+                        Value: "production"
                       - Name: LOG_LEVEL
-                        Value: info
+                        Value: "info"
                       - Name: SSR_PORT
                         Value: 80
                       - Name: SSR_ENABLED
                         Value: "yes"
                       - Name: SSR_BUILD
-                        Value: /usr/src/app/build
+                        Value: "/usr/src/app/build"
                       - Name: SSR_ROOT
-                        Value: /usr/src/app/src
+                        Value: "/usr/src/app/src"
                       - Name: SSR_TIMEOUT
                         Value: 5000
                       - Name: SSR_DISABLE_JS
@@ -80,6 +80,36 @@ Resources:
                     Options:
                         awslogs-group: !Ref AWS::StackName
                         awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Sub service-docker-cra-webapp${ECRVersion}
+                - Name: proxy
+                  Essential: true
+                  Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${StackName}/proxy:${ECRVersion}
+                  Memory: 32
+                  MemoryReservation: 16
+                  PortMappings:
+                      - ContainerPort: 3478
+                  Environment:
+                      - Name: NGINX_PORT
+                        Value: "3478"
+                      - Name: NGINX_UPSTREAM_SERVER
+                        Value: webapp
+                      - Name: NGINX_UPSTREAM_PORT
+                        Value: "80"
+                      - Name: NGINX_STATIC_FILES_ENABLED
+                        Value: "true"
+                      - Name: NGINX_STATIC_FILES_ROOT
+                        Value: "/usr/src/app/build/"
+                  Links:
+                      - webapp:webapp
+                  VolumesFrom:
+                      - SourceContainer: webapp
+                        ReadOnly: true
+                  LogConfiguration:
+                    LogDriver: awslogs
+                    Options:
+                        awslogs-group: !Ref AWS::StackName
+                        awslogs-region: !Ref AWS::Region
+                        awslogs-stream-prefix: !Sub service-docker-cra-proxy${ECRVersion}
 
     CloudWatchLogsGroup:
         Type: AWS::Logs::LogGroup
