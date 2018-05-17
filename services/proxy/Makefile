@@ -11,23 +11,26 @@ all: run
 # you probably need to make a login session to ECR:
 # $ $(aws --profile=aws-profile --region=eu-west-1 --no-include-email  ecr get-login)
 
-name ?= servicename
+name ?= api
 version ?= latest
 registry ?= xxx.dkr.ecr.yyy.amazonaws.com
 
 image:
 	$(call blue, "Building docker image...")
-	docker build --build-arg VERSION="${version}" --rm=true -t ${name}:${version} -f Dockerfile .
+	docker build --no-cache -t ${name}:${version} -f Dockerfile .
+	docker tag ${name}:${version} ${name}:latest
 	$(MAKE) clean
 
 run: image
 	$(call blue, "Running Docker image locally...")
-	docker run -i -t --rm -p 8080:80 ${name}:${version} 
+	docker run -i -t --rm -p 8080:8080 ${name}:${version} 
 
 publish: image
 	$(call blue, "Publishing Docker image to registry...")
 	docker tag ${name}:${version} ${registry}/${name}:${version}
+	docker tag ${name}:${version} ${registry}/${name}:latest
 	docker push ${registry}/${name}:${version} 
+	docker push ${registry}/${name}:latest
 
 clean: 
 	@rm -f app 

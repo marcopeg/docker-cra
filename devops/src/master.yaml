@@ -1,0 +1,184 @@
+Description: >
+    AWS Deployment Stack on ECR/ECS
+
+    Last Modified: 16th April 2018
+    Author: Marco Pegoraro <marco.pegoraro@gmail.com>
+
+Parameters:
+
+    EnvironmentType:
+        Type: String
+        Default: dev
+
+    EnvironmentMode:
+        Type: String
+        Default: boot
+        AllowedValues:
+            - boot
+            - init
+            - up
+
+    S3TemplateRoot:
+        Description: How to resolve sub-stack templates
+        Type: String
+
+    EC2KeyPairName:
+        Description: PEM to access bastion and resources in the stack
+        Type: String
+
+Mappings:
+    
+    EnvironmentMap:
+
+        dev:
+            # networking
+            VPC:                        vpc-5c0bcb3b
+            Subnet1:                    subnet-3c1ada5b
+            Subnet2:                    subnet-b9d41bf0
+            Subnet3:                    subnet-b09a96e8
+            # ECS Cluster
+            InstanceType:               t2.small
+            ClusterSizeMin:             1
+            ClusterSizeMax:             3
+            ClusterSizeDesired:         2
+            # services
+            SimpleNginxPriority:        6000
+            SimpleNginxCount:           1
+            DockerCRAPriority:          6100
+            DockerCRACount:             1
+            DockerCRAVersion:           0.0.3
+
+        stage:
+            # networking
+            VPC:                        vpc-5c0bcb3b
+            Subnet1:                    subnet-3c1ada5b
+            Subnet2:                    subnet-b9d41bf0
+            Subnet3:                    subnet-b09a96e8
+            # ECS Cluster
+            InstanceType:               t2.small
+            ClusterSizeMin:             1
+            ClusterSizeMax:             3
+            ClusterSizeDesired:         2
+            # services
+            SimpleNginxPriority:        4000
+            SimpleNginxCount:           1
+            DockerCRAPriority:          4100
+            DockerCRACount:             1
+            DockerCRAVersion:           0.0.1
+
+        prod:
+            # networking
+            VPC:                        vpc-5c0bcb3b
+            Subnet1:                    subnet-3c1ada5b
+            Subnet2:                    subnet-b9d41bf0
+            Subnet3:                    subnet-b09a96e8
+            # ECS Cluster
+            InstanceType:               t2.small
+            ClusterSizeMin:             1
+            ClusterSizeMax:             3
+            ClusterSizeDesired:         2
+            # services
+            SimpleNginxPriority:        2000
+            SimpleNginxCount:           1
+            DockerCRAPriority:          2100
+            DockerCRACount:             1
+            DockerCRAVersion:           0.0.1
+
+Conditions:
+    IsBootRun: !Or
+        - !Equals [ !Ref EnvironmentMode, boot ]
+        - !Equals [ !Ref EnvironmentMode, init ]
+        - !Equals [ !Ref EnvironmentMode, up ]
+    IsInitRun: !Or
+        - !Equals [ !Ref EnvironmentMode, init ]
+        - !Equals [ !Ref EnvironmentMode, up ]
+    IsUpdateRun: !Equals [ !Ref EnvironmentMode, up ]
+
+Resources:
+
+###
+# Infrastructure
+###
+
+    ECR:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL:            !Sub "${S3TemplateRoot}/infrastructure/ecr.yaml"
+            Parameters:
+                StackName:          !Ref AWS::StackName
+
+    SG:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL:            !Sub "${S3TemplateRoot}/infrastructure/sg.yaml"
+            Parameters:
+                StackName:          !Ref AWS::StackName
+                VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
+
+    EFS:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL:            !Sub "${S3TemplateRoot}/infrastructure/efs.yaml"
+            Parameters:
+                StackName:          !Ref AWS::StackName
+                Subnet1:            !FindInMap [ EnvironmentMap, !Ref EnvironmentType, Subnet1 ]
+                Subnet2:            !FindInMap [ EnvironmentMap, !Ref EnvironmentType, Subnet2 ]
+                SecurityGroup:      !GetAtt SG.Outputs.EFS
+
+    ALB:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL:            !Sub "${S3TemplateRoot}/infrastructure/alb.yaml"
+            Parameters:
+                StackName:          !Ref AWS::StackName
+                VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
+                Subnet1:            !FindInMap [ EnvironmentMap, !Ref EnvironmentType, Subnet1 ]
+                Subnet2:            !FindInMap [ EnvironmentMap, !Ref EnvironmentType, Subnet2 ]
+                SecurityGroup:      !GetAtt SG.Outputs.ALB
+
+    ECS:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL:            !Sub "${S3TemplateRoot}/infrastructure/ecs.yaml"
+            Parameters:
+                StackName:          !Ref AWS::StackName
+                VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
+                Subnet1:            !FindInMap [ EnvironmentMap, !Ref EnvironmentType, Subnet1 ]
+                Subnet2:            !FindInMap [ EnvironmentMap, !Ref EnvironmentType, Subnet2 ]
+                InstanceType:       !FindInMap [ EnvironmentMap, !Ref EnvironmentType, InstanceType ]
+                ClusterSizeMin:     !FindInMap [ EnvironmentMap, !Ref EnvironmentType, ClusterSizeMin ]
+                ClusterSizeMax:     !FindInMap [ EnvironmentMap, !Ref EnvironmentType, ClusterSizeMax ]
+                ClusterSizeDesired: !FindInMap [ EnvironmentMap, !Ref EnvironmentType, ClusterSizeDesired ]
+                SecurityGroup:      !GetAtt SG.Outputs.ECS
+                EC2KeyPairName:     !Ref EC2KeyPairName
+                EFSPhysicalId:      !GetAtt EFS.Outputs.EFSPhysicalId
+
+###
+# Classic ECS Services
+###
+
+    # SimpleNginx:
+    #     Type: AWS::CloudFormation::Stack
+    #     Properties:
+    #         TemplateURL:            !Sub "${S3TemplateRoot}/services/simple-nginx.yaml"
+    #         Parameters:
+    #             StackName:          !Ref AWS::StackName
+    #             VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
+    #             Cluster:            !GetAtt ECS.Outputs.Cluster
+    #             Listener:           !GetAtt ALB.Outputs.Listener
+    #             ListenerPriority:   !FindInMap [ EnvironmentMap, !Ref EnvironmentType, SimpleNginxPriority ]
+    #             DesiredCount:       !FindInMap [ EnvironmentMap, !Ref EnvironmentType, SimpleNginxCount ]
+    
+    DockerCRA:
+        Type: AWS::CloudFormation::Stack
+        Condition: IsUpdateRun
+        Properties:
+            TemplateURL:            !Sub "${S3TemplateRoot}/services/docker-cra.yaml"
+            Parameters:
+                StackName:          !Ref AWS::StackName
+                VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
+                Cluster:            !GetAtt ECS.Outputs.Cluster
+                Listener:           !GetAtt ALB.Outputs.Listener
+                ListenerPriority:   !FindInMap [ EnvironmentMap, !Ref EnvironmentType, DockerCRAPriority ]
+                DesiredCount:       !FindInMap [ EnvironmentMap, !Ref EnvironmentType, DockerCRACount ]
+                ECRVersion:         !FindInMap [ EnvironmentMap, !Ref EnvironmentType, DockerCRAVersion ]

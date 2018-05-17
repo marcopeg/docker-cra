@@ -1,0 +1,71 @@
+Description: Firewalling rules to stack resources 
+
+Parameters:
+    
+    StackName:
+        Type: String
+    
+    VPC:
+        Type: AWS::EC2::VPC::Id
+        Description: VPC in which to deploy the security groups
+
+Resources:
+
+    ALBSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            VpcId: !Ref VPC
+            GroupDescription: Access to the ALB
+            SecurityGroupIngress:
+                - CidrIp: 0.0.0.0/0
+                  FromPort: 80
+                  ToPort: 80
+                  IpProtocol: -1
+                - CidrIp: 0.0.0.0/0
+                  FromPort: 443
+                  ToPort: 443
+                  IpProtocol: -1
+            Tags:
+                - Key: Name
+                  Value: !Sub ${StackName}-ALB
+
+    ECSSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties: 
+            VpcId: !Ref VPC
+            GroupDescription: Regulates access to the ECS cluster
+            SecurityGroupIngress:
+                - SourceSecurityGroupId: !Ref ALBSecurityGroup 
+                  IpProtocol: -1
+                - IpProtocol: tcp
+                  FromPort: 22
+                  ToPort: 22
+                  CidrIp: 0.0.0.0/0
+            Tags: 
+                - Key: Name
+                  Value: !Sub ${StackName}-ECS
+
+    EFSSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            VpcId: !Ref VPC
+            GroupDescription: Access to the EFS Filesystem
+            SecurityGroupIngress:
+                - SourceSecurityGroupId: !Ref ECSSecurityGroup
+                  IpProtocol: -1
+            Tags:
+                - Key: Name
+                  Value: !Sub ${StackName}-EFS
+
+Outputs:
+
+    ALB:
+        Value: !Ref ALBSecurityGroup
+
+    ECS: 
+        Value: !Ref ECSSecurityGroup
+    
+    EFS:
+        Value: !Ref EFSSecurityGroup
+
+

@@ -89,3 +89,8 @@ const boot = async () => {
 }
 
 boot()
+
+// Almost gracefully exit
+process.on('SIGTERM', function () {
+    process.exit(0)
+})

@@ -1,0 +1,20 @@
+Description: >
+    ECR repositories for Docker images used by ECS
+
+Parameters:
+
+    StackName:
+        Description: Main stack name
+        Type: String
+
+Resources:
+
+    proxy:
+        Type: "AWS::ECR::Repository"
+        Properties:
+            RepositoryName: !Sub ${StackName}/proxy
+
+    webapp:
+        Type: "AWS::ECR::Repository"
+        Properties:
+            RepositoryName: !Sub ${StackName}/webapp
