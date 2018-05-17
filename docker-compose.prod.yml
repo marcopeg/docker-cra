@@ -19,7 +19,7 @@ services:
         restart: always
 
     proxy:
-        build: ./services/nginx-proxy
+        build: ./services/proxy
         networks:
             - production
         ports:
