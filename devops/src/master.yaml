@@ -44,6 +44,9 @@ Mappings:
             # services
             SimpleNginxPriority:        6000
             SimpleNginxCount:           1
+            DockerCRAPriority:          6100
+            DockerCRACount:             1
+            DockerCRAVersion:           0.0.1
 
         stage:
             # networking
@@ -59,6 +62,9 @@ Mappings:
             # services
             SimpleNginxPriority:        4000
             SimpleNginxCount:           1
+            DockerCRAPriority:          4100
+            DockerCRACount:             1
+            DockerCRAVersion:           0.0.1
 
         prod:
             # networking
@@ -74,6 +80,9 @@ Mappings:
             # services
             SimpleNginxPriority:        2000
             SimpleNginxCount:           1
+            DockerCRAPriority:          2100
+            DockerCRACount:             1
+            DockerCRAVersion:           0.0.1
 
 Resources:
 
@@ -138,14 +147,27 @@ Resources:
 # Classic ECS Services
 ###
 
-    SimpleNginx:
+    # SimpleNginx:
+    #     Type: AWS::CloudFormation::Stack
+    #     Properties:
+    #         TemplateURL:            !Sub "${S3TemplateRoot}/services/simple-nginx.yaml"
+    #         Parameters:
+    #             StackName:          !Ref AWS::StackName
+    #             VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
+    #             Cluster:            !GetAtt ECS.Outputs.Cluster
+    #             Listener:           !GetAtt ALB.Outputs.Listener
+    #             ListenerPriority:   !FindInMap [ EnvironmentMap, !Ref EnvironmentType, SimpleNginxPriority ]
+    #             DesiredCount:       !FindInMap [ EnvironmentMap, !Ref EnvironmentType, SimpleNginxCount ]
+    
+    DockerCRA:
         Type: AWS::CloudFormation::Stack
         Properties:
-            TemplateURL:            !Sub "${S3TemplateRoot}/services/simple-nginx.yaml"
+            TemplateURL:            !Sub "${S3TemplateRoot}/services/docker-cra.yaml"
             Parameters:
                 StackName:          !Ref AWS::StackName
                 VPC:                !FindInMap [ EnvironmentMap, !Ref EnvironmentType, VPC ]
                 Cluster:            !GetAtt ECS.Outputs.Cluster
                 Listener:           !GetAtt ALB.Outputs.Listener
-                ListenerPriority:   !FindInMap [ EnvironmentMap, !Ref EnvironmentType, SimpleNginxPriority ]
-                DesiredCount:       !FindInMap [ EnvironmentMap, !Ref EnvironmentType, SimpleNginxCount ]
+                ListenerPriority:   !FindInMap [ EnvironmentMap, !Ref EnvironmentType, DockerCRAPriority ]
+                DesiredCount:       !FindInMap [ EnvironmentMap, !Ref EnvironmentType, DockerCRACount ]
+                ECRVersion:         !FindInMap [ EnvironmentMap, !Ref EnvironmentType, DockerCRAVersion ]
