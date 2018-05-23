@@ -51,7 +51,7 @@ class AuthorDetails extends React.PureComponent {
 
     render () {
         return this.props.isReady
-            ? <Content {...this.props} />
+            ? <a href={`/users/${this.props.authorId}/details`}><Content {...this.props} /></a>
             : <Loading />
     }
 }
@@ -78,4 +78,3 @@ Content.propTypes = {
 
 const StyledAuthorDetails = radium(AuthorDetails)
 export default connect(state2props, dispatch2props)(StyledAuthorDetails)
-
