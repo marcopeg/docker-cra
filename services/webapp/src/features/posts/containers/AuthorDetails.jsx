@@ -5,7 +5,7 @@ import radium from 'radium'
 import { connect } from 'react-redux'
 
 import PageTitle from 'layouts/Page/Title'
-
+import Link from 'components/RadiumLink'
 import { loadUser } from 'features/users/services/users-service'
 
 /**
@@ -51,7 +51,7 @@ class AuthorDetails extends React.PureComponent {
 
     render () {
         return this.props.isReady
-            ? <a href={`/users/${this.props.authorId}/details`}><Content {...this.props} /></a>
+            ? <Link to={`/users/${this.props.authorId}/details`}><Content {...this.props} /></Link>
             : <Loading />
     }
 }
