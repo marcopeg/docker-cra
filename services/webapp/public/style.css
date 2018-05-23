@@ -1,0 +1,9 @@
+a {
+   color: rgb(25, 151, 252);
+   display: inline-block;
+   transition: all .3s ease;
+   -webkit-transition: all .3s ease;
+}
+a:hover {
+   color: rgb(3, 107, 191);
+}
