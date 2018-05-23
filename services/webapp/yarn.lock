@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@marcopeg/utils@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@marcopeg/utils/-/utils-1.8.0.tgz#3251a867a93b65c6d35c60540ba06c22d2a2b6c5"
+"@marcopeg/utils@^1.8.9":
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/@marcopeg/utils/-/utils-1.8.9.tgz#557681a62c8d56d2692a6cd14a3646c434ce500f"
   dependencies:
     babel-runtime "^6.26.0"
 
@@ -1812,9 +1812,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-app-ssr@^0.0.44:
-  version "0.0.44"
-  resolved "https://registry.yarnpkg.com/create-react-app-ssr/-/create-react-app-ssr-0.0.44.tgz#abc80c5274913d3d0ce036ac873bb02295888742"
+create-react-app-ssr@^0.0.50:
+  version "0.0.50"
+  resolved "https://registry.yarnpkg.com/create-react-app-ssr/-/create-react-app-ssr-0.0.50.tgz#3ddaa15b60e81293b6192016fe85a0aa1542117a"
   dependencies:
     babel-runtime "^6.26.0"
     express "^4.16.3"
@@ -6028,9 +6028,9 @@ react-loadable@^5.4.0:
   dependencies:
     prop-types "^15.5.0"
 
-react-redux-feature@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-redux-feature/-/react-redux-feature-0.1.0.tgz#5105cb9b353b1a5ec7b432c336e491c09d3d48fd"
+react-redux-feature@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-redux-feature/-/react-redux-feature-0.3.1.tgz#edcc528332a24f3c4daacaa6228cf8301cfc4071"
   dependencies:
     babel-runtime "^6.26.0"
 
