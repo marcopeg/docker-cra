@@ -41,7 +41,7 @@ const Content = ({ id, name, email, address }) => (
             <Link style={styles.title} to={`/users/${id}/details`}>{name}</Link>
         </PageTitle>
         <div>
-            <a href={`mailto:${email}`}>{email}</a>
+            <a style={styles.title} href={`mailto:${email}`}>{email}</a>
         </div>
         <div>
             {`${address.street}, ${address.suite}, ${address.city}`}
