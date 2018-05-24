@@ -32,11 +32,11 @@ const dispatch2props = {
 
 const Loading = () => null
 
-const Content = ({ name, email, address }) => (
+const Content = ({ id, name, email, address }) => (
     <div>
-        <PageTitle>{name}</PageTitle>
+        <PageTitle><Link to={`/users/${id}/details`}>{name}</Link></PageTitle>
         <div>
-            <a href={`mailto:${email}`}>{email}</a>
+            <Link to={`mailto:${email}`}>{email}</Link>
         </div>
         <div>
             {`${address.street}, ${address.suite}, ${address.city}`}
@@ -51,7 +51,7 @@ class AuthorDetails extends React.PureComponent {
 
     render () {
         return this.props.isReady
-            ? <Link to={`/users/${this.props.authorId}/details`}><Content {...this.props} /></Link>
+            ? <Content {...this.props} />
             : <Loading />
     }
 }
@@ -63,6 +63,7 @@ AuthorDetails.propTypes = {
 }
 
 Content.propTypes = {
+    authorId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     address: PropTypes.shape({
