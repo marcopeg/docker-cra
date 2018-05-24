@@ -63,7 +63,7 @@ AuthorDetails.propTypes = {
 }
 
 Content.propTypes = {
-    authorId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     address: PropTypes.shape({
