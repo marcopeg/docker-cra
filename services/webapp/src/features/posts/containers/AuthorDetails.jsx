@@ -5,8 +5,11 @@ import radium from 'radium'
 import { connect } from 'react-redux'
 
 import PageTitle from 'layouts/Page/Title'
-
+import Link from 'components/RadiumLink'
 import { loadUser } from 'features/users/services/users-service'
+
+import getStyles from './Posts.style'
+const styles = getStyles()
 
 /**
  * State Management
@@ -32,11 +35,13 @@ const dispatch2props = {
 
 const Loading = () => null
 
-const Content = ({ name, email, address }) => (
+const Content = ({ id, name, email, address }) => (
     <div>
-        <PageTitle>{name}</PageTitle>
+        <PageTitle>
+            <Link style={styles.title} to={`/users/${id}/details`}>{name}</Link>
+        </PageTitle>
         <div>
-            <a href={`mailto:${email}`}>{email}</a>
+            <a style={styles.title} href={`mailto:${email}`}>{email}</a>
         </div>
         <div>
             {`${address.street}, ${address.suite}, ${address.city}`}
@@ -63,6 +68,7 @@ AuthorDetails.propTypes = {
 }
 
 Content.propTypes = {
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     address: PropTypes.shape({
@@ -78,4 +84,3 @@ Content.propTypes = {
 
 const StyledAuthorDetails = radium(AuthorDetails)
 export default connect(state2props, dispatch2props)(StyledAuthorDetails)
-
