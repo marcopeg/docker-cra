@@ -8,6 +8,9 @@ import PageTitle from 'layouts/Page/Title'
 import Link from 'components/RadiumLink'
 import { loadUser } from 'features/users/services/users-service'
 
+import getStyles from './Posts.style'
+const styles = getStyles()
+
 /**
  * State Management
  */
@@ -34,9 +37,11 @@ const Loading = () => null
 
 const Content = ({ id, name, email, address }) => (
     <div>
-        <PageTitle><Link to={`/users/${id}/details`}>{name}</Link></PageTitle>
+        <PageTitle>
+            <Link style={styles.title} to={`/users/${id}/details`}>{name}</Link>
+        </PageTitle>
         <div>
-            <Link to={`mailto:${email}`}>{email}</Link>
+            <a href={`mailto:${email}`}>{email}</a>
         </div>
         <div>
             {`${address.street}, ${address.suite}, ${address.city}`}
