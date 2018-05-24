@@ -7,8 +7,8 @@ import Text from 'layouts/Page/Text'
 
 import reactImage from '../images/react.png'
 import react2Image from '../images/react.jpg'
-// import getStyles from './Dashboard.style'
-// const styles = getStyles()
+import getStyles from './Dashboard.style'
+const styles = getStyles()
 
 
 /**
@@ -32,9 +32,9 @@ const Dashboard = () => (
                     <li>SSR - server side rendering is built-in with simple Express middlewares</li>
                     <li>
                         {'the React app is built over '}
-                        <a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener noreferrer">create-react-app</a>
+                        <a style={styles.link} key="create-react-app" href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener noreferrer">create-react-app</a>
                         {' and '}
-                        <a href="https://github.com/timarney/react-app-rewired" target="_blank" rel="noopener noreferrer">react-app-rewired</a>
+                        <a style={styles.link} key="react-app-rewired" href="https://github.com/timarney/react-app-rewired" target="_blank" rel="noopener noreferrer">react-app-rewired</a>
                     </li>
                     <li>
                         react-redux, redux-thunks, react-router, route listeners,{' '}
@@ -42,7 +42,7 @@ const Dashboard = () => (
                     </li>
                 </ul>
                 <p>
-                    <a href="https://github.com/marcopeg/docker-cra" target="_blank" rel="noopener noreferrer">Read the full README.md, and contribute on GitHub :-)</a>
+                    <a style={styles.link} key="docker-cra" href="https://github.com/marcopeg/docker-cra" target="_blank" rel="noopener noreferrer">Read the full README.md, and contribute on GitHub :-)</a>
                 </p>
                 <p>
                     <img src={reactImage} alt="made with react" style={{ maxWidth: '100%' }} />
